@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 240" fill="none">
+  <!-- Left Curly Arrow -->
+  <path
+    d="M 175 70 C 230 110, 245 155, 275 155 C 315 155, 340 100, 310 75 C 270 45, 250 175, 340 175 C 410 175, 435 65, 480 65 L 480 195"
+    stroke="#ffffff"
+    stroke-width="4.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M 469 178 L 480 198 L 491 178"
+    stroke="#ffffff"
+    stroke-width="4.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Right Curly Arrow -->
+  <path
+    d="M 825 70 C 770 110, 755 155, 725 155 C 685 155, 660 100, 690 75 C 730 45, 750 175, 660 175 C 590 175, 565 65, 520 65 L 520 195"
+    stroke="#ffffff"
+    stroke-width="4.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M 509 178 L 520 198 L 531 178"
+    stroke="#ffffff"
+    stroke-width="4.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>
