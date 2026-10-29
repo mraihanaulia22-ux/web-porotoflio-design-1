@@ -2907,84 +2907,28 @@
   filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.45));
 }
 
-/* Contact Top Navbar */
+/* Contact Top Navbar - Identik 100% dengan Navbar Home */
 .contact-navbar-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  padding-top: clamp(12px, 2.2vh, 22px);
+  padding-top: clamp(14px, 2.6vh, 26px);
   display: flex;
   justify-content: center;
-  z-index: 50;
-}
-
-.contact-navbar-container {
-  width: clamp(360px, 68vw, 800px);
-  height: clamp(50px, 6.2vh, 60px);
-  background: #0e3728;
-  border-radius: 999px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 clamp(18px, 2.8vw, 34px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.contact-navbar-logo-box {
-  width: clamp(20px, 2.4vh, 26px);
-  height: clamp(20px, 2.4vh, 26px);
-  background: #ffffff;
-  border-radius: 5px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-  flex-shrink: 0;
-}
-
-.contact-nav-menu {
-  display: flex;
-  align-items: center;
-  gap: clamp(14px, 2.8vw, 40px);
-}
-
-.contact-nav-item {
-  background: none;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  font-family: 'Fredoka', cursive, sans-serif;
-  font-size: clamp(15px, 2vh, 19px);
-  font-weight: 700;
-  color: #ffffff;
-  letter-spacing: 0.6px;
-  padding: 4px 6px;
-  transition: all 0.22s ease;
-}
-
-.contact-nav-item:hover {
-  transform: translateY(-1.5px);
-  color: #38b28c;
-}
-
-.contact-nav-item-active {
-  font-weight: 900;
-  color: #0e3728;
-  -webkit-text-stroke: 3.5px #ffffff;
-  paint-order: stroke fill;
-  letter-spacing: 1.2px;
-  text-shadow: 0 0 1px #ffffff;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
-}
-
-.contact-nav-item-active:hover {
-  color: #0e3728;
-  transform: scale(1.03);
+  z-index: 120;
+  pointer-events: auto;
 }
 
 /* Main Content Stage */
 .contact-stage-content {
   position: relative;
   width: 100%;
-  max-width: 1300px;
-  height: calc(100vh - clamp(65px, 8.5vh, 85px));
-  margin: 0 auto;
+  max-width: 1320px;
+  height: calc(100vh - clamp(70px, 9.5vh, 95px));
+  margin-top: clamp(65px, 9vh, 90px);
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -2994,7 +2938,7 @@
 /* Center Golden Ring */
 .contact-center-ring-wrapper {
   position: absolute;
-  top: clamp(65px, 12vh, 110px);
+  top: clamp(60px, 12vh, 105px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 6;
@@ -3002,15 +2946,15 @@
 }
 
 .contact-ring-center {
-  width: clamp(180px, 23vw, 270px);
+  width: clamp(160px, 20vw, 230px);
   height: auto;
   filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.48));
 }
 
-/* Double Red Sticker Titles "CONTACT ME" - Besar & Gagah seperti Section 1 */
+/* Double Red Sticker Titles "CONTACT ME" - Digeser Lebih ke Tepi Kiri & Kanan */
 .contact-sticker-title {
   position: absolute;
-  top: clamp(55px, 11vh, 100px);
+  top: clamp(50px, 10.5vh, 95px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -3028,30 +2972,30 @@
 }
 
 .contact-title-left {
-  left: clamp(24px, 7vw, 120px);
+  left: clamp(18px, 4.2vw, 75px);
   transform: rotate(-6deg);
 }
 
 .contact-title-right {
-  right: clamp(24px, 7vw, 120px);
+  right: clamp(18px, 4.2vw, 75px);
   transform: rotate(6deg);
 }
 
-/* Curly Arrows - Gambar Asli User */
+/* Curly Arrows - Dikecilkan Rapi Agar Tidak Tabrakan */
 .curly-arrow-wrapper {
   position: absolute;
-  top: clamp(75px, 13.5vh, 125px);
-  width: clamp(260px, 31vw, 420px);
+  top: clamp(75px, 14vh, 125px);
+  width: clamp(160px, 19vw, 260px);
   z-index: 12;
   pointer-events: none;
 }
 
 .arrow-left-wrapper {
-  left: clamp(150px, 21vw, 340px);
+  left: clamp(130px, 20vw, 300px);
 }
 
 .arrow-right-wrapper {
-  right: clamp(150px, 21vw, 340px);
+  right: clamp(130px, 20vw, 300px);
 }
 
 .curly-arrow-img {

@@ -32,21 +32,26 @@ const ContactSection = ({ onNavigate, isInView = true }) => {
         loading="lazy"
       />
 
-      {/* Top Header Navbar */}
+      {/* Top Header Navbar - Mengikuti style navbar Home 100% */}
       <header className="contact-navbar-wrapper">
-        <nav className="contact-navbar-container">
+        <nav className="navbar-container">
           {/* White square icon logo di kiri navbar */}
-          <div className="contact-navbar-logo-box" aria-hidden="true" />
+          <div
+            className="nav-square-btn"
+            onClick={() => onNavigate(0)}
+            title="Kembali ke Home"
+            aria-label="Kembali ke Home"
+          />
 
           {/* Navigation Menu Buttons */}
-          <div className="contact-nav-menu">
+          <div className="nav-menu">
             {navItems.map((item, idx) => {
               const isActive = item === 'CONTACT';
               return (
                 <button
                   key={item}
                   type="button"
-                  className={`contact-nav-item ${isActive ? 'contact-nav-item-active' : ''}`}
+                  className={`nav-item ${isActive ? 'nav-item-active' : ''}`}
                   onClick={() => onNavigate(idx)}
                 >
                   {item}
