@@ -2907,19 +2907,6 @@
   filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.45));
 }
 
-/* Contact Top Navbar - Identik 100% dengan Navbar Home */
-.contact-navbar-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  padding-top: clamp(14px, 2.6vh, 26px);
-  display: flex;
-  justify-content: center;
-  z-index: 120;
-  pointer-events: auto;
-}
-
 /* Main Content Stage */
 .contact-stage-content {
   position: relative;

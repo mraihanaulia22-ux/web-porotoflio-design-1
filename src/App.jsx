@@ -43,8 +43,8 @@ function App() {
   const sections = ['hero-section', 'about-section', 'project-section', 'contact-section'];
   const navLinks = ['HOME', 'ABOUT ME', 'PROJECT', 'CONTACT'];
 
-  // Track if we are in Section Home (Section 1)
-  const isHome = activeTab === 'HOME';
+  // Track navbar visibility: visible in HOME (Section 0) & CONTACT (Section 3)
+  const isNavbarVisible = activeTab === 'HOME' || activeTab === 'CONTACT';
 
   // Smooth Direct Gliding from Section to Section
   const navigateToSection = (index) => {
@@ -151,9 +151,17 @@ function App() {
 
   return (
     <div className="portfolio-app">
-      {/* Top Navbar: only visible when in Home section, hides when in other sections */}
-      <header className={`navbar-wrapper ${isHome ? 'navbar-visible' : 'navbar-hidden'}`}>
+      {/* Top Persistent Global Navbar: visible in HOME and CONTACT sections */}
+      <header className={`navbar-wrapper ${isNavbarVisible ? 'navbar-visible' : 'navbar-hidden'}`}>
         <nav className="navbar-container">
+          {/* White square logo / icon button anchored on the far left */}
+          <div
+            className="nav-square-btn"
+            onClick={() => navigateToSection(0)}
+            title="Kembali ke Home"
+            aria-label="Kembali ke Home"
+          />
+
           {/* Nav Menu Links */}
           <div className="nav-menu">
             {navLinks.map((link) => {
