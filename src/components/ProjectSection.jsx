@@ -189,31 +189,12 @@ export default function ProjectSection({ onOpenFullCatalog, isInView, projects, 
                   }}
                 >
                   <div className="wheel-card-inner">
-                    {/* Ambient Glow Backdrop (No Empty Black Holes) */}
-                    <img
-                      src={project.coverImage}
-                      alt=""
-                      aria-hidden="true"
-                      className="wheel-card-ambient-backdrop"
-                      draggable={false}
-                    />
-
-                    {/* Main Artwork Image - 100% Full Uncropped Contain */}
                     <img
                       src={project.coverImage}
                       alt={project.title}
-                      className="wheel-card-img-contain"
+                      className="wheel-card-img"
                       draggable={false}
                     />
-
-                    {/* Overlay info on center card - Sleek Pill That Doesn't Block Text */}
-                    {isCenter && (
-                      <div className="wheel-card-overlay">
-                        <span className="card-hint-badge">
-                          🔍 KLIK UNTUK DETAIL KARYA
-                        </span>
-                      </div>
-                    )}
                   </div>
                 </div>
               );
@@ -239,7 +220,7 @@ export default function ProjectSection({ onOpenFullCatalog, isInView, projects, 
         <div className="wheel-bottom-controls">
           <div className="wheel-swipe-pill">
             <span className="swipe-icon">⇄</span>
-            <span>PUTAR SETIR / GESER UNTUK LIHAT KARYA LAIN ({currentIndex + 1} / {total})</span>
+            <span>PUTAR SETIR / GESER • KLIK KARYA UNTUK DETAIL ({currentIndex + 1} / {total})</span>
           </div>
         </div>
       </div>
