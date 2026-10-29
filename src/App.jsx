@@ -154,13 +154,6 @@ function App() {
       {/* Top Persistent Global Navbar: visible in HOME and CONTACT sections */}
       <header className={`navbar-wrapper ${isNavbarVisible ? 'navbar-visible' : 'navbar-hidden'}`}>
         <nav className="navbar-container">
-          {/* White square logo / icon button anchored on the far left */}
-          <div
-            className="nav-square-btn"
-            onClick={() => navigateToSection(0)}
-            title="Kembali ke Home"
-            aria-label="Kembali ke Home"
-          />
 
           {/* Nav Menu Links */}
           <div className="nav-menu">
