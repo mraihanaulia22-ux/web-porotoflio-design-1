@@ -13,11 +13,13 @@ import mejaImg from './assets/portfolio/Meja.webp';
 import tiang1Img from './assets/portfolio/Tiang 1.webp';
 import tiang2Img from './assets/portfolio/Tiang 2.webp';
 
-// Code-Splitting Lazy Loaded Modals & CMS (Optimal initial load)
+// Essential Studio Admin & Passkey Components (Loaded directly for instant 0-blank reliability)
+import CmsAdminDashboard from './components/CmsAdminDashboard';
+import CmsAuthModal from './components/CmsAuthModal';
+
+// Code-Splitting Lazy Loaded Viewer Modals
 const FullCatalogModal = lazy(() => import('./components/FullCatalogModal'));
 const ProjectDetailModal = lazy(() => import('./components/ProjectDetailModal'));
-const CmsAdminDashboard = lazy(() => import('./components/CmsAdminDashboard'));
-const CmsAuthModal = lazy(() => import('./components/CmsAuthModal'));
 const CertPreviewModal = lazy(() => import('./components/CertPreviewModal'));
 
 export default function App() {
@@ -39,40 +41,46 @@ export default function App() {
 
   // Persistent CMS Projects Data
   const [projectsData, setProjectsData] = useState(() => {
-    const saved = safeGetStorage('studio_cms_projects', null);
-    if (saved && Array.isArray(saved) && saved.length > 0) {
-      // Purge only fake mock dummy data, KEEP coffee shop / real projects!
-      const dummyIds = ['gentlemen-barbershop', 'urban-apparel-streetwear'];
-      let filtered = saved.filter((p) => !dummyIds.includes(p.id));
+    try {
+      const saved = safeGetStorage('studio_cms_projects', null);
+      if (saved && Array.isArray(saved) && saved.length > 0) {
+        // Purge only fake mock dummy data, KEEP coffee shop / real projects!
+        const dummyIds = ['gentlemen-barbershop', 'urban-apparel-streetwear'];
+        let filtered = saved.filter((p) => p && typeof p === 'object' && !dummyIds.includes(p.id));
 
-      // Ensure coffee project (titik-temu-cafe) is always restored
-      const hasCoffee = filtered.some((p) => p.category === 'COFFEE SHOP' || p.id === 'titik-temu-cafe');
-      if (!hasCoffee) {
-        const coffeeItem = PROJECTS_DATA.find((p) => p.id === 'titik-temu-cafe');
-        if (coffeeItem) {
-          filtered = [...filtered, coffeeItem];
+        // Ensure coffee project (titik-temu-cafe) is always restored
+        const hasCoffee = filtered.some((p) => p && (p.category === 'COFFEE SHOP' || p.id === 'titik-temu-cafe'));
+        if (!hasCoffee) {
+          const coffeeItem = PROJECTS_DATA.find((p) => p.id === 'titik-temu-cafe');
+          if (coffeeItem) {
+            filtered = [...filtered, coffeeItem];
+          }
         }
+
+        const sanitized = filtered.map((p) => {
+          if (!p) return null;
+          const defaultItem = PROJECTS_DATA.find((d) => d.id === p.id);
+          if (p.id === 'mie-ayam-kampung' && defaultItem) {
+            return { ...p, coverImage: defaultItem.coverImage, gallery: defaultItem.gallery };
+          }
+          if (p.id === 'titik-temu-cafe' && defaultItem) {
+            return { ...defaultItem, ...p, coverImage: defaultItem.coverImage, gallery: defaultItem.gallery };
+          }
+          if (defaultItem && (!p.coverImage || (typeof p.coverImage === 'string' && p.coverImage.includes('mie-ayam.webp')))) {
+            return { ...p, coverImage: defaultItem.coverImage };
+          }
+          return p;
+        }).filter(Boolean);
+
+        // Immediately persist cleaned real data to client localStorage
+        safeSetStorage('studio_cms_projects', sanitized);
+        return sanitized;
       }
-
-      const sanitized = filtered.map((p) => {
-        const defaultItem = PROJECTS_DATA.find((d) => d.id === p.id);
-        if (p.id === 'mie-ayam-kampung' && defaultItem) {
-          return { ...p, coverImage: defaultItem.coverImage, gallery: defaultItem.gallery };
-        }
-        if (p.id === 'titik-temu-cafe' && defaultItem) {
-          return { ...defaultItem, ...p, coverImage: defaultItem.coverImage, gallery: defaultItem.gallery };
-        }
-        if (defaultItem && (!p.coverImage || p.coverImage.includes('mie-ayam.webp'))) {
-          return { ...p, coverImage: defaultItem.coverImage };
-        }
-        return p;
-      });
-
-      // Immediately persist cleaned real data to client localStorage
-      safeSetStorage('studio_cms_projects', sanitized);
-      return sanitized;
+      return PROJECTS_DATA;
+    } catch (err) {
+      console.warn('[App] Error initializing projectsData:', err);
+      return PROJECTS_DATA;
     }
-    return PROJECTS_DATA;
   });
 
   const handleSaveProjects = (updated) => {
@@ -82,7 +90,8 @@ export default function App() {
 
   // Persistent Skills Data
   const [skillsData, setSkillsData] = useState(() => {
-    return safeGetStorage('studio_cms_skills', INITIAL_SKILLS);
+    const saved = safeGetStorage('studio_cms_skills', null);
+    return (Array.isArray(saved) && saved.length > 0) ? saved : INITIAL_SKILLS;
   });
 
   const handleSaveSkills = (updated) => {
@@ -92,7 +101,8 @@ export default function App() {
 
   // Persistent Certificates Data
   const [certificatesData, setCertificatesData] = useState(() => {
-    return safeGetStorage('studio_cms_certificates', INITIAL_CERTIFICATES);
+    const saved = safeGetStorage('studio_cms_certificates', null);
+    return (Array.isArray(saved) && saved.length > 0) ? saved : INITIAL_CERTIFICATES;
   });
 
   const handleSaveCertificates = (updated) => {
@@ -328,28 +338,6 @@ export default function App() {
           onClose={() => setSelectedProjectDetail(null)}
         />
 
-        {/* CMS Passkey Gate Modal */}
-        {isCmsOpen && !isCmsAuthenticated && (
-          <CmsAuthModal
-            isOpen={isCmsOpen && !isCmsAuthenticated}
-            onAuthenticated={handleAuthenticatedCms}
-            onClose={handleCloseCms}
-          />
-        )}
-
-        {/* Interactive Studio CMS Dashboard */}
-        {isCmsOpen && isCmsAuthenticated && (
-          <CmsAdminDashboard
-            initialProjects={projectsData}
-            onSaveProjects={handleSaveProjects}
-            initialSkills={skillsData}
-            onSaveSkills={handleSaveSkills}
-            initialCertificates={certificatesData}
-            onSaveCertificates={handleSaveCertificates}
-            onClose={handleCloseCms}
-          />
-        )}
-
         {/* Scan Certificate Preview Modal */}
         {activeCertPreview && (
           <CertPreviewModal
@@ -358,6 +346,27 @@ export default function App() {
           />
         )}
       </Suspense>
+
+      {/* Direct Studio CMS & Passkey Overlay (Instant Render, Zero Blank Risk) */}
+      {isCmsOpen && !isCmsAuthenticated && (
+        <CmsAuthModal
+          isOpen={isCmsOpen && !isCmsAuthenticated}
+          onAuthenticated={handleAuthenticatedCms}
+          onClose={handleCloseCms}
+        />
+      )}
+
+      {isCmsOpen && isCmsAuthenticated && (
+        <CmsAdminDashboard
+          initialProjects={projectsData}
+          onSaveProjects={handleSaveProjects}
+          initialSkills={skillsData}
+          onSaveSkills={handleSaveSkills}
+          initialCertificates={certificatesData}
+          onSaveCertificates={handleSaveCertificates}
+          onClose={handleCloseCms}
+        />
+      )}
 
       {/* Persistent Floating UP Button */}
       <button

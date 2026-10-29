@@ -5,8 +5,10 @@ import daun1Img from '../assets/portfolio/Daun 1.webp';
 import daun2Img from '../assets/portfolio/Daun 2.webp';
 
 export default function AboutSection({ skills, certificates, onOpenCertPreview }) {
-  const pendidikanList = certificates.filter((c) => c.type === 'pendidikan');
-  const sertifikatList = certificates.filter((c) => c.type === 'sertifikat');
+  const safeCerts = Array.isArray(certificates) ? certificates : [];
+  const safeSkills = Array.isArray(skills) ? skills : [];
+  const pendidikanList = safeCerts.filter((c) => c && c.type === 'pendidikan');
+  const sertifikatList = safeCerts.filter((c) => c && c.type === 'sertifikat');
 
   return (
     <section id="about-section" className="about-section">
@@ -56,7 +58,7 @@ export default function AboutSection({ skills, certificates, onOpenCertPreview }
           <div className="skills-center-content">
             <h3 className="skills-title-sticker">SKILL & SPESIALIST</h3>
             <div className="skill-icons-row">
-              {skills.map((skill) => (
+              {safeSkills.map((skill) => (
                 <div
                   key={skill.id}
                   className="skill-icon-item"
