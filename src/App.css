@@ -1423,13 +1423,13 @@
   filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.45));
 }
 
-/* Wheel Showcase Stage - Sesuai Gambar Mockup */
+/* Wheel Showcase Stage - Sesuai Gambar Mockup & Diperbesar agar Gagah & Full */
 .wheel-showcase-stage {
   position: relative;
   width: 100%;
-  max-width: 1080px;
-  height: clamp(380px, 60vh, 485px);
-  margin-top: clamp(4px, 0.8vh, 10px);
+  max-width: 1140px;
+  height: clamp(400px, 63vh, 520px);
+  margin-top: clamp(2px, 0.5vh, 8px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1445,7 +1445,7 @@
 
 .wheel-cards-track {
   position: relative;
-  width: 290px;
+  width: 320px;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -1454,8 +1454,8 @@
 
 .wheel-card-anchor {
   position: absolute;
-  width: clamp(235px, 23vw, 305px);
-  height: clamp(365px, 58vh, 465px);
+  width: clamp(265px, 26vw, 345px);
+  height: clamp(390px, 61vh, 505px);
   transition: transform 0.45s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.35s ease;
   transform-origin: center bottom;
   will-change: transform, opacity;
@@ -1469,8 +1469,11 @@
   overflow: hidden;
   box-shadow: 0 20px 48px rgba(0, 0, 0, 0.6);
   border: 3.5px solid rgba(255, 255, 255, 0.95);
-  background: #111111;
-  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  background: #0a1f18;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
 }
 
 .card-is-center .wheel-card-inner {
@@ -1480,34 +1483,55 @@
     0 0 28px rgba(255, 255, 255, 0.45);
 }
 
-.wheel-card-img {
+/* Ambient Layer di Belakang Gambar Utama agar Mengisi Sudut Kartu */
+.wheel-card-ambient-backdrop {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  filter: blur(22px) brightness(0.65);
+  transform: scale(1.18);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Gambar Desain Utama: 100% Full Uncropped Contain */
+.wheel-card-img-contain {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   display: block;
+  z-index: 2;
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.45));
 }
 
 .wheel-card-overlay {
   position: absolute;
-  bottom: 0;
+  bottom: 12px;
   left: 0;
   right: 0;
-  padding: 14px 10px 12px;
-  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.85) 100%);
+  padding: 8px 10px;
+  z-index: 5;
   display: flex;
   justify-content: center;
+  pointer-events: none;
 }
 
 .card-hint-badge {
-  background: #ffffff;
-  color: #0f3d2f;
+  background: rgba(15, 61, 47, 0.88);
+  color: #ffffff;
+  border: 1.5px solid rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(8px);
   font-family: 'Fredoka', sans-serif;
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.5px;
   padding: 5px 14px;
   border-radius: 9999px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease;
 }
 
 /* Nav Arrow Buttons (Minimalist Clean White Arrows Murni - Tanpa Kotak Hijau) */

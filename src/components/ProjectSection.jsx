@@ -162,10 +162,10 @@ export default function ProjectSection({ onOpenFullCatalog, isInView, projects, 
               const isCenter = offset === 0;
               const isVisible = Math.abs(offset) <= 2;
 
-              // Arc Wheel Math - Prominent Hero Proportion
+              // Arc Wheel Math - Prominent Hero Proportion (Spacious & Bold)
               const rotateDeg = offset * 8; // Steering rotation
               const translateY = Math.pow(Math.abs(offset), 1.25) * 16; // Gentle curve
-              const translateX = offset * 230; // Horizontal spread
+              const translateX = offset * 255; // Horizontal spread matched with wider cards
               const scale = isCenter ? 1.0 : Math.max(0.82, 1 - Math.abs(offset) * 0.12);
               const zIndex = 50 - Math.abs(offset) * 10;
               const opacity = isVisible ? (isCenter ? 1 : Math.max(0.55, 1 - Math.abs(offset) * 0.22)) : 0;
@@ -189,18 +189,28 @@ export default function ProjectSection({ onOpenFullCatalog, isInView, projects, 
                   }}
                 >
                   <div className="wheel-card-inner">
+                    {/* Ambient Glow Backdrop (No Empty Black Holes) */}
                     <img
                       src={project.coverImage}
-                      alt={project.title}
-                      className="wheel-card-img"
+                      alt=""
+                      aria-hidden="true"
+                      className="wheel-card-ambient-backdrop"
                       draggable={false}
                     />
 
-                    {/* Overlay info on center card */}
+                    {/* Main Artwork Image - 100% Full Uncropped Contain */}
+                    <img
+                      src={project.coverImage}
+                      alt={project.title}
+                      className="wheel-card-img-contain"
+                      draggable={false}
+                    />
+
+                    {/* Overlay info on center card - Sleek Pill That Doesn't Block Text */}
                     {isCenter && (
                       <div className="wheel-card-overlay">
                         <span className="card-hint-badge">
-                          KLIK UNTUK DETAIL KARYA
+                          🔍 KLIK UNTUK DETAIL KARYA
                         </span>
                       </div>
                     )}
