@@ -72,24 +72,18 @@ export default function ProjectDetailModal({ project, isOpen, onClose }) {
 
         {/* Modal Main Content (2 Columns fit in screen) */}
         <div className="modal-body-grid">
-          {/* Left Column: Master Preview Card with 100% Auto-Fit Lock */}
+          {/* Left Column: Master Preview Card with 100% Adaptive Auto-Fit */}
           <div className="modal-preview-column">
             <div className="master-image-card">
-              {/* Soft Ambient Backdrop Atmosphere */}
-              <div
-                className="master-backdrop-blur"
-                style={{ backgroundImage: `url("${currentImage}")` }}
-                aria-hidden="true"
-              />
-              {/* 100% Full Fit Image without any crop or distortion */}
+              {/* 100% Full Fit Image without any crop, black void or distortion */}
               <img
                 src={currentImage}
                 alt={galleryList[selectedImageIndex]?.title || project.title}
                 className="master-preview-img-contain"
               />
-              <div className="preview-caption-pill">
-                {galleryList[selectedImageIndex]?.title || project.title}
-              </div>
+            </div>
+            <div className="preview-caption-pill">
+              {galleryList[selectedImageIndex]?.title || project.title}
             </div>
           </div>
 

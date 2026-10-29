@@ -6,6 +6,7 @@ import ProjectDetailModal from './components/ProjectDetailModal';
 import CmsAdminDashboard from './components/CmsAdminDashboard';
 import ContactSection from './components/ContactSection';
 import { PROJECTS_DATA } from './data/projects';
+import { INITIAL_SKILLS, INITIAL_CERTIFICATES } from './data/aboutData';
 
 // Section 1 Asset imports
 import bgMat from './assets/portfolio/image 96 (1).webp';
@@ -42,6 +43,7 @@ function App() {
   const [isCmsAuthenticated, setIsCmsAuthenticated] = useState(false);
   const [passwordInput, setPasswordInput] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const STUDIO_PASSWORD = 'perumahan1234'; // Default secure PIN/Password
 
   // LocalStorage persistence for CMS projects data (with auto-sync for default masters)
@@ -73,6 +75,47 @@ function App() {
       console.error('Failed to save to localStorage:', e);
     }
   };
+
+  // LocalStorage persistence for Skills Data
+  const [skillsData, setSkillsData] = useState(() => {
+    try {
+      const saved = localStorage.getItem('studio_cms_skills');
+      return saved ? JSON.parse(saved) : INITIAL_SKILLS;
+    } catch {
+      return INITIAL_SKILLS;
+    }
+  });
+
+  const handleSaveSkills = (updated) => {
+    setSkillsData(updated);
+    try {
+      localStorage.setItem('studio_cms_skills', JSON.stringify(updated));
+    } catch (e) {
+      console.error('Failed to save skills to localStorage:', e);
+    }
+  };
+
+  // LocalStorage persistence for Certificates Data
+  const [certificatesData, setCertificatesData] = useState(() => {
+    try {
+      const saved = localStorage.getItem('studio_cms_certificates');
+      return saved ? JSON.parse(saved) : INITIAL_CERTIFICATES;
+    } catch {
+      return INITIAL_CERTIFICATES;
+    }
+  });
+
+  const handleSaveCertificates = (updated) => {
+    setCertificatesData(updated);
+    try {
+      localStorage.setItem('studio_cms_certificates', JSON.stringify(updated));
+    } catch (e) {
+      console.error('Failed to save certificates to localStorage:', e);
+    }
+  };
+
+  // Modal preview scan sertifikat
+  const [activeCertPreview, setActiveCertPreview] = useState(null);
 
   const handlePasswordSubmit = (e) => {
     e.preventDefault();
@@ -239,13 +282,6 @@ function App() {
       {/* Top Persistent Global Navbar: visible in HOME and CONTACT sections */}
       <header className={`navbar-wrapper ${isNavbarVisible ? 'navbar-visible' : 'navbar-hidden'}`}>
         <nav className="navbar-container">
-          {/* White square logo / icon button anchored on the far left (Klik 3x rahasia untuk buka CMS) */}
-          <div
-            className="nav-square-btn"
-            onClick={handleLogoSecretClick}
-            title="Home (Klik 3x untuk Studio CMS)"
-            aria-label="Kembali ke Home"
-          />
 
           {/* Nav Menu Links */}
           <div className="nav-menu">
@@ -430,21 +466,21 @@ function App() {
               <div className="skills-center-content">
                 <h3 className="skills-title-sticker">SKILL & SPESIALIST</h3>
                 <div className="skill-icons-row">
-                  <div className="skill-icon-item" title="Adobe Illustrator">
-                    <img src={illustratorImg} alt="Adobe Illustrator" className="skill-logo logo-illustrator" />
-                  </div>
-                  <div className="skill-icon-item" title="Adobe Photoshop">
-                    <img src={photoshopImg} alt="Adobe Photoshop" className="skill-logo logo-photoshop" />
-                  </div>
-                  <div className="skill-icon-item" title="Figma">
-                    <img src={figmaImg} alt="Figma" className="skill-logo logo-figma" />
-                  </div>
-                  <div className="skill-icon-item" title="CorelDRAW">
-                    <img src={corelImg} alt="CorelDRAW" className="skill-logo logo-corel" />
-                  </div>
-                  <div className="skill-icon-item" title="Canva">
-                    <img src={canvaImg} alt="Canva" className="skill-logo logo-canva" />
-                  </div>
+                  {skillsData.map((skill) => (
+                    <div
+                      key={skill.id}
+                      className="skill-icon-item"
+                      title={`${skill.name} • ${skill.level || 'Software Specialist'}`}
+                    >
+                      {skill.logo ? (
+                        <img src={skill.logo} alt={skill.name} className="skill-logo" />
+                      ) : (
+                        <div className="skill-logo-fallback">
+                          {skill.name.slice(0, 2).toUpperCase()}
+                        </div>
+                      )}
+                    </div>
+                  ))}
                 </div>
               </div>
 
@@ -456,26 +492,34 @@ function App() {
               />
             </div>
 
-            {/* Section: PENDIDIKAN & SERTIFIKAT */}
+            {/* Section: PENDIDIKAN & SERTIFIKAT (Dynamic & Interactive with Scan Preview) */}
             <div className="about-cards-row">
               {/* Pendidikan Card */}
               <div className="info-card-column">
                 <div className="sticker-tag sticker-tag-pendidikan">PENDIDIKAN</div>
                 <div className="dark-info-card">
                   <div className="timeline-container">
-                    <div className="timeline-item">
-                      <span className="timeline-dot dot-blue" />
-                      <span className="timeline-text">
-                        SMK DESAIN KOMUNIKASI<br />VISUAL
-                      </span>
-                    </div>
-                    <div className="timeline-line" />
-                    <div className="timeline-item">
-                      <span className="timeline-dot dot-teal" />
-                      <span className="timeline-text">
-                        S1 TEKNIK INFORMATIKA
-                      </span>
-                    </div>
+                    {certificatesData.filter((c) => c.type === 'pendidikan').map((item, idx, arr) => (
+                      <React.Fragment key={item.id}>
+                        <div
+                          className="timeline-item"
+                          style={{ cursor: item.image ? 'pointer' : 'default' }}
+                          onClick={() => item.image && setActiveCertPreview(item)}
+                          title={item.image ? 'Klik untuk melihat scan ijazah/sertifikat' : item.issuer}
+                        >
+                          <span className={`timeline-dot ${idx % 2 === 0 ? 'dot-blue' : 'dot-teal'}`} />
+                          <span className="timeline-text">
+                            {item.title}
+                            {item.year && <small style={{ display: 'block', fontSize: '11px', opacity: 0.75, fontWeight: 500 }}>({item.year})</small>}
+                          </span>
+                          {item.image && <span style={{ fontSize: '12px', marginLeft: '6px' }}>🔍</span>}
+                        </div>
+                        {idx < arr.length - 1 && <div className="timeline-line" />}
+                      </React.Fragment>
+                    ))}
+                    {certificatesData.filter((c) => c.type === 'pendidikan').length === 0 && (
+                      <div style={{ color: '#94a3b8', fontSize: '13px', padding: '10px' }}>Belum ada data pendidikan.</div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -485,16 +529,28 @@ function App() {
                 <div className="sticker-tag sticker-tag-sertifikat">SERTIFIKAT</div>
                 <div className="dark-info-card">
                   <div className="cert-list-container">
-                    <div className="cert-item">
-                      <span className="cert-text">
-                        SMK DESAIN KOMUNIKASI<br />VISUAL
-                      </span>
-                    </div>
-                    <div className="cert-item cert-item-gap">
-                      <span className="cert-text">
-                        S1 TEKNIK INFORMATIKA
-                      </span>
-                    </div>
+                    {certificatesData.filter((c) => c.type === 'sertifikat').map((cert, idx) => (
+                      <div
+                        key={cert.id}
+                        className={`cert-item ${idx > 0 ? 'cert-item-gap' : ''}`}
+                        style={{ cursor: cert.image ? 'pointer' : 'default', transition: 'transform 0.2s ease' }}
+                        onClick={() => cert.image && setActiveCertPreview(cert)}
+                        title={cert.image ? 'Klik untuk melihat scan sertifikat asli' : cert.issuer}
+                      >
+                        <span className="cert-text">
+                          {cert.title}
+                          {cert.issuer && (
+                            <small style={{ display: 'block', fontSize: '11px', color: '#8edec6', marginTop: '2px', fontWeight: 500 }}>
+                              {cert.issuer} {cert.year ? `(${cert.year})` : ''}
+                            </small>
+                          )}
+                        </span>
+                        {cert.image && <span style={{ fontSize: '14px', marginLeft: '8px' }}>📜</span>}
+                      </div>
+                    ))}
+                    {certificatesData.filter((c) => c.type === 'sertifikat').length === 0 && (
+                      <div style={{ color: '#94a3b8', fontSize: '13px', padding: '10px' }}>Belum ada data sertifikat.</div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -535,28 +591,48 @@ function App() {
         onClose={() => setSelectedProjectDetail(null)}
       />
 
-      {/* CMS Password Gate Modal (Sebelum membuka Studio CMS) */}
+      {/* CMS Password Gate Modal (Studio Passkey Gate - Clean & Creative) */}
       {isCmsOpen && !isCmsAuthenticated && (
         <div className="cms-auth-overlay">
           <div className="cms-auth-card">
-            <div className="cms-auth-icon-circle">🔒</div>
-            <h3 className="cms-auth-title">STUDIO CMS ACCESS</h3>
+            <div className="cms-auth-badge">
+              <span className="cms-auth-badge-dot"></span>
+              STUDIO PASSKEY
+            </div>
+
+            <div className="cms-auth-icon-circle">
+              <span className="cms-auth-icon-art">🔑</span>
+            </div>
+
+            <h3 className="cms-auth-title">Studio Admin Access</h3>
             <p className="cms-auth-desc">
-              Area terbatas. Masukkan kata sandi studio untuk mengelola portofolio & sertifikat.
+              Masukkan passkey studio kamu untuk mengelola karya portofolio, logo skill software, dan sertifikat.
             </p>
 
             <form onSubmit={handlePasswordSubmit} className="cms-auth-form">
-              <input
-                type="password"
-                className="cms-auth-input"
-                placeholder="Masukkan kata sandi..."
-                value={passwordInput}
-                onChange={(e) => {
-                  setPasswordInput(e.target.value);
-                  if (passwordError) setPasswordError('');
-                }}
-                autoFocus
-              />
+              <div className="cms-auth-input-wrapper">
+                <span className="cms-auth-field-icon">🔒</span>
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  className="cms-auth-input"
+                  placeholder="Ketik passkey studio..."
+                  value={passwordInput}
+                  onChange={(e) => {
+                    setPasswordInput(e.target.value);
+                    if (passwordError) setPasswordError('');
+                  }}
+                  autoFocus
+                />
+                <button
+                  type="button"
+                  className="cms-auth-toggle-pwd"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  title={showPassword ? 'Sembunyikan passkey' : 'Lihat passkey'}
+                  aria-label="Toggle password visibility"
+                >
+                  {showPassword ? '🙈' : '👁️'}
+                </button>
+              </div>
 
               {passwordError && (
                 <div className="cms-auth-error-msg">{passwordError}</div>
@@ -574,7 +650,7 @@ function App() {
                   type="submit"
                   className="cms-auth-submit-btn"
                 >
-                  Masuk Studio
+                  Masuk Studio ➔
                 </button>
               </div>
             </form>
@@ -587,8 +663,40 @@ function App() {
         <CmsAdminDashboard
           initialProjects={projectsData}
           onSaveProjects={handleSaveProjects}
+          initialSkills={skillsData}
+          onSaveSkills={handleSaveSkills}
+          initialCertificates={certificatesData}
+          onSaveCertificates={handleSaveCertificates}
           onClose={handleCloseCms}
         />
+      )}
+
+      {/* Modal Preview Scan Sertifikat Asli */}
+      {activeCertPreview && (
+        <div className="cert-preview-overlay" onClick={() => setActiveCertPreview(null)}>
+          <div className="cert-preview-card" onClick={(e) => e.stopPropagation()}>
+            <div className="cert-preview-header">
+              <div>
+                <h4 className="cert-preview-title">{activeCertPreview.title}</h4>
+                <p className="cert-preview-sub">{activeCertPreview.issuer} • {activeCertPreview.year}</p>
+              </div>
+              <button
+                type="button"
+                className="cert-preview-close"
+                onClick={() => setActiveCertPreview(null)}
+              >
+                ✕
+              </button>
+            </div>
+            <div className="cert-preview-body">
+              <img
+                src={activeCertPreview.image}
+                alt={activeCertPreview.title}
+                className="cert-preview-img"
+              />
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Persistent Floating UP Button - Sembunyikan saat ada modal/detail aktif */}
