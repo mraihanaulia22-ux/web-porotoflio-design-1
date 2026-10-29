@@ -3,7 +3,7 @@ import verdeMain from '../assets/projects/verde-harvest-main.webp';
 import verdeThumb1 from '../assets/projects/verde-thumb-1.webp';
 import verdeThumb2 from '../assets/projects/verde-thumb-2.webp';
 import verdeThumb3 from '../assets/projects/verde-thumb-3.webp';
-import mieAyamImg from '../assets/projects/mie-ayam.webp';
+import mieAyamImg from '../assets/projects/mie-ayam-full.jpg';
 import sambalImg from '../assets/projects/sambal-sedap.webp';
 
 export const PROJECT_CATEGORIES = [

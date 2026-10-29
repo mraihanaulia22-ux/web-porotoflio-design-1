@@ -44,11 +44,22 @@ function App() {
   const [passwordError, setPasswordError] = useState('');
   const STUDIO_PASSWORD = 'perumahan1234'; // Default secure PIN/Password
 
-  // LocalStorage persistence for CMS projects data
+  // LocalStorage persistence for CMS projects data (with auto-sync for default masters)
   const [projectsData, setProjectsData] = useState(() => {
     try {
       const saved = localStorage.getItem('studio_cms_projects');
-      return saved ? JSON.parse(saved) : PROJECTS_DATA;
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        // Ensure default initial assets (like updated high-res master posters) stay synced if unmodified by custom upload
+        return parsed.map((p) => {
+          const defaultItem = PROJECTS_DATA.find((d) => d.id === p.id);
+          if (defaultItem && (!p.coverImage || p.coverImage.includes('mie-ayam.webp'))) {
+            return { ...p, coverImage: defaultItem.coverImage };
+          }
+          return p;
+        });
+      }
+      return PROJECTS_DATA;
     } catch {
       return PROJECTS_DATA;
     }
