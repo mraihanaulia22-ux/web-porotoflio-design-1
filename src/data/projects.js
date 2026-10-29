@@ -1,4 +1,4 @@
-// Project Portfolio Data
+// Project Portfolio Data (Curated Real Client & Creative Works)
 import verdeMain from '../assets/projects/verde-harvest-main.webp';
 import verdeThumb1 from '../assets/projects/verde-thumb-1.webp';
 import verdeThumb2 from '../assets/projects/verde-thumb-2.webp';
@@ -93,65 +93,4 @@ export const PROJECTS_DATA = [
     description:
       'Desain konten promosi digital kuliner nusantara dengan komposisi cabai segar, cobek batu tradisional, serta penonjolan label 100% cabai segar tanpa pengawet.',
   },
-  {
-    id: 'kopi-senja-roastery',
-    title: 'Kopi Senja - Signature Cold Brew Branding',
-    category: 'COFFEE SHOP',
-    mediaFormat: 'Packaging & Label Produk',
-    tagline: 'Kopi Nusantara Dari Hati',
-    coverImage: verdeMain, // Fallback preview
-    gallery: [
-      {
-        id: 'c1',
-        title: 'Kemasan Botol Cold Brew',
-        image: verdeMain,
-      },
-    ],
-    tools: ['Adobe Illustrator', 'Figma'],
-    client: 'Senja Roastery & Cafe',
-    year: '2024',
-    description:
-      'Pengembangan identitas visual label botol kopi cold brew dan poster menu meja dengan gaya rustic modern yang elegan untuk kedai kopi lokal.',
-  },
-  {
-    id: 'gentlemen-barbershop',
-    title: 'The Classic Cut - Barbershop Social Assets',
-    category: 'JASA/LOCAL SERVICES',
-    mediaFormat: 'Brosur & Materi Cetak',
-    tagline: 'Gaya Rambut Presisi & Berkelas',
-    coverImage: sambalImg, // Fallback preview
-    gallery: [
-      {
-        id: 'b1',
-        title: 'Pricelist & Promo Service',
-        image: sambalImg,
-      },
-    ],
-    tools: ['Adobe Illustrator', 'Photoshop'],
-    client: 'The Classic Cut Barbershop',
-    year: '2023',
-    description:
-      'Pembuatan aset visual promosi layanan potong rambut, pricelist cetak tahan air, serta konten template Instagram feed bertema vintage maskulin.',
-  },
-  {
-    id: 'urban-apparel-streetwear',
-    title: 'Hustle Culture - Streetwear Merch Graphics',
-    category: 'FASHION & APPAREL',
-    mediaFormat: 'Branding & Identitas Visual',
-    tagline: 'Bold Typography & Edgy Illustrations',
-    coverImage: mieAyamImg, // Fallback preview
-    gallery: [
-      {
-        id: 'f1',
-        title: 'T-Shirt Back Graphic Artwork',
-        image: mieAyamImg,
-      },
-    ],
-    tools: ['Adobe Illustrator', 'Photoshop'],
-    client: 'Hustle Culture Clothing',
-    year: '2024',
-    description:
-      'Desain grafis sablon t-shirt dan packaging box untuk lini pakaian streetwear dengan tipografi ekspresif dan ilustrasi vektor detail tinggi.',
-  },
 ];
-

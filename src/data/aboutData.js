@@ -64,3 +64,4 @@ export const INITIAL_CERTIFICATES = [
     image: '',
   },
 ];
+
