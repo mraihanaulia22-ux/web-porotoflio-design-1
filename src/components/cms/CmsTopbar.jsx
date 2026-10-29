@@ -32,3 +32,4 @@ export default function CmsTopbar({ activeTab, saveNotification }) {
     </header>
   );
 }
+

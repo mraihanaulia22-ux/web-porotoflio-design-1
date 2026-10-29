@@ -5,6 +5,8 @@ import verdeThumb2 from '../assets/projects/verde-thumb-2.webp';
 import verdeThumb3 from '../assets/projects/verde-thumb-3.webp';
 import mieAyamImg from '../assets/projects/mie-ayam-full.jpg';
 import sambalImg from '../assets/projects/sambal-sedap.webp';
+import titikTemuLatte from '../assets/projects/titik-temu-latte.webp';
+import titikTemuMenu from '../assets/projects/titik-temu-menu.webp';
 
 export const PROJECT_CATEGORIES = [
   'ALL',
@@ -92,5 +94,30 @@ export const PROJECTS_DATA = [
     year: '2024',
     description:
       'Desain konten promosi digital kuliner nusantara dengan komposisi cabai segar, cobek batu tradisional, serta penonjolan label 100% cabai segar tanpa pengawet.',
+  },
+  {
+    id: 'titik-temu-cafe',
+    title: 'Titik Temu Cafe - Poster Feed Instagram',
+    category: 'COFFEE SHOP',
+    mediaFormat: 'Poster & Feed Sosmed',
+    tagline: 'Signature Latte & Rustic Modern Menu Cafe',
+    coverImage: titikTemuLatte,
+    gallery: [
+      {
+        id: 'tt1',
+        title: 'Poster Feed Instagram (Signature Latte)',
+        image: titikTemuLatte,
+      },
+      {
+        id: 'tt2',
+        title: 'Menu Cafe Titik Temu',
+        image: titikTemuMenu,
+      },
+    ],
+    tools: ['Figma', 'CorelDRAW'],
+    client: 'Senja Roastery & Cafe',
+    year: '2026',
+    description:
+      'Pengembangan identitas visual label botol kopi cold brew dan poster menu meja dengan gaya rustic modern yang elegan untuk kedai kopi lokal.',
   },
 ];

@@ -41,3 +41,4 @@ export default function CertPreviewModal({ cert, onClose }) {
     </div>
   );
 }
+

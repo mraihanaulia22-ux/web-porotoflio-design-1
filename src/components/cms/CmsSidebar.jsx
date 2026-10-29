@@ -50,3 +50,4 @@ export default function CmsSidebar({ activeTab, onSelectTab, onExit }) {
     </aside>
   );
 }
+

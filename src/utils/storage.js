@@ -21,3 +21,4 @@ export function safeSetStorage(key, value) {
     return false;
   }
 }
+

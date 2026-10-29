@@ -29,20 +29,38 @@ export default function App() {
   const [isCmsOpen, setIsCmsOpen] = useState(() => {
     return window.location.pathname.includes('/keystatic') || window.location.pathname.includes('/admin');
   });
-  const [isCmsAuthenticated, setIsCmsAuthenticated] = useState(false);
+  const [isCmsAuthenticated, setIsCmsAuthenticated] = useState(() => {
+    try {
+      return sessionStorage.getItem('studio_cms_authenticated') === 'true';
+    } catch {
+      return false;
+    }
+  });
 
   // Persistent CMS Projects Data
   const [projectsData, setProjectsData] = useState(() => {
     const saved = safeGetStorage('studio_cms_projects', null);
     if (saved && Array.isArray(saved) && saved.length > 0) {
-      // Purge any legacy mock/dummy data
-      const dummyIds = ['kopi-senja-roastery', 'gentlemen-barbershop', 'urban-apparel-streetwear'];
-      const filtered = saved.filter((p) => !dummyIds.includes(p.id));
+      // Purge only fake mock dummy data, KEEP coffee shop / real projects!
+      const dummyIds = ['gentlemen-barbershop', 'urban-apparel-streetwear'];
+      let filtered = saved.filter((p) => !dummyIds.includes(p.id));
+
+      // Ensure coffee project (titik-temu-cafe) is always restored
+      const hasCoffee = filtered.some((p) => p.category === 'COFFEE SHOP' || p.id === 'titik-temu-cafe');
+      if (!hasCoffee) {
+        const coffeeItem = PROJECTS_DATA.find((p) => p.id === 'titik-temu-cafe');
+        if (coffeeItem) {
+          filtered = [...filtered, coffeeItem];
+        }
+      }
 
       const sanitized = filtered.map((p) => {
         const defaultItem = PROJECTS_DATA.find((d) => d.id === p.id);
         if (p.id === 'mie-ayam-kampung' && defaultItem) {
           return { ...p, coverImage: defaultItem.coverImage, gallery: defaultItem.gallery };
+        }
+        if (p.id === 'titik-temu-cafe' && defaultItem) {
+          return { ...defaultItem, ...p, coverImage: defaultItem.coverImage, gallery: defaultItem.gallery };
         }
         if (defaultItem && (!p.coverImage || p.coverImage.includes('mie-ayam.webp'))) {
           return { ...p, coverImage: defaultItem.coverImage };
@@ -85,11 +103,53 @@ export default function App() {
   // Certificate image preview modal state
   const [activeCertPreview, setActiveCertPreview] = useState(null);
 
+  const handleOpenCms = () => {
+    setIsCmsOpen(true);
+    if (!window.location.pathname.includes('/admin')) {
+      window.history.pushState({}, '', '/admin');
+    }
+  };
+
+  const handleAuthenticatedCms = () => {
+    try {
+      sessionStorage.setItem('studio_cms_authenticated', 'true');
+    } catch (err) {
+      console.error(err);
+    }
+    setIsCmsAuthenticated(true);
+    setIsCmsOpen(true);
+    if (!window.location.pathname.includes('/admin')) {
+      window.history.pushState({}, '', '/admin');
+    }
+  };
+
   const handleCloseCms = () => {
     setIsCmsOpen(false);
     setIsCmsAuthenticated(false);
+    try {
+      sessionStorage.removeItem('studio_cms_authenticated');
+    } catch (err) {
+      console.error(err);
+    }
     if (window.location.pathname.includes('/keystatic') || window.location.pathname.includes('/admin')) {
       window.history.pushState({}, '', '/');
+    }
+  };
+
+  // Secret 3x click on logo to open CMS
+  const logoClickRef = useRef({ count: 0, timer: null });
+  const handleLogoSecretClick = () => {
+    navigateToSection(0);
+    logoClickRef.current.count += 1;
+    if (logoClickRef.current.timer) clearTimeout(logoClickRef.current.timer);
+
+    if (logoClickRef.current.count >= 3) {
+      handleOpenCms();
+      logoClickRef.current.count = 0;
+    } else {
+      logoClickRef.current.timer = setTimeout(() => {
+        logoClickRef.current.count = 0;
+      }, 1500);
     }
   };
 
@@ -98,7 +158,7 @@ export default function App() {
     const handleSecretKey = (e) => {
       if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'A' || e.key === 'a' || e.key === 'K' || e.key === 'k')) {
         e.preventDefault();
-        setIsCmsOpen((prev) => !prev);
+        handleOpenCms();
       }
     };
     window.addEventListener('keydown', handleSecretKey);
@@ -190,6 +250,14 @@ export default function App() {
       {/* Top Persistent Global Navbar */}
       <header className={`navbar-wrapper ${isNavbarVisible ? 'navbar-visible' : 'navbar-hidden'}`}>
         <nav className="navbar-container">
+          {/* White square logo / icon button (Klik 3x rahasia untuk Studio CMS) */}
+          <div
+            className="nav-square-btn"
+            onClick={handleLogoSecretClick}
+            title="Home (Klik 3x rahasia untuk Studio CMS)"
+            aria-label="Kembali ke Home"
+          />
+
           <div className="nav-menu">
             {navLinks.map((link) => {
               const isActive = activeTab === link;
@@ -264,7 +332,7 @@ export default function App() {
         {isCmsOpen && !isCmsAuthenticated && (
           <CmsAuthModal
             isOpen={isCmsOpen && !isCmsAuthenticated}
-            onAuthenticated={() => setIsCmsAuthenticated(true)}
+            onAuthenticated={handleAuthenticatedCms}
             onClose={handleCloseCms}
           />
         )}

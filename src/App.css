@@ -1858,40 +1858,39 @@
   box-sizing: border-box;
 }
 
-/* Left Column: Master Image Preview with 100% Adaptive Auto-Fit (No Letterbox, No Black Bars) */
+/* Left Column: Master Image Preview with Adaptive Framing */
 .modal-preview-column {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   height: 100%;
 }
 
 .master-image-card {
   position: relative;
+  width: auto;
+  max-width: 100%;
+  height: clamp(340px, 60vh, 500px);
+  border-radius: 24px;
+  border: 4px solid #ffffff;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
+  background: transparent;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  max-height: clamp(340px, 60vh, 520px);
-  max-width: 100%;
-  width: fit-content;
-  height: fit-content;
-  border-radius: 22px;
-  border: 4px solid #ffffff;
-  overflow: hidden;
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.6);
-  background: transparent;
   transition: all 0.3s ease;
 }
 
 .master-preview-img-contain {
-  max-height: clamp(340px, 60vh, 520px);
-  max-width: min(100%, 560px);
+  height: 100%;
   width: auto;
-  height: auto;
+  max-width: clamp(280px, 38vw, 560px);
   object-fit: contain;
   display: block;
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.45));
 }
 
 .project-format-badge {
@@ -1976,51 +1975,29 @@
 
 .project-tags-row {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
   align-items: center;
 }
 
 .project-category-badge {
   background: #ffffff;
-  color: #0d382b;
+  color: #0f3d2f;
   font-family: 'Fredoka', sans-serif;
   font-size: 12px;
   font-weight: 800;
   padding: 5px 14px;
   border-radius: 9999px;
   letter-spacing: 0.5px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
-  display: inline-flex;
-  align-items: center;
-}
-
-.project-format-badge {
-  background: #10b981;
-  color: #ffffff;
-  font-family: 'Fredoka', sans-serif;
-  font-size: 12px;
-  font-weight: 800;
-  padding: 5px 14px;
-  border-radius: 9999px;
-  letter-spacing: 0.5px;
-  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
 }
 
 .project-year-badge {
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.15);
   color: #ffffff;
-  font-family: 'Fredoka', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 12px;
-  font-weight: 800;
-  padding: 5px 14px;
+  font-weight: 700;
+  padding: 5px 12px;
   border-radius: 9999px;
-  display: inline-flex;
-  align-items: center;
 }
 
 .project-detail-title {
@@ -2250,101 +2227,133 @@
 
 .catalog-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(295px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 28px;
 }
 
+/* Card: Physical Designer Mounted Proof with Hero Poster Canvas */
 .catalog-card-item {
-  background: rgba(10, 35, 27, 0.95);
-  backdrop-filter: blur(10px);
-  border-radius: 22px;
-  border: 2px solid rgba(255, 255, 255, 0.22);
+  background: #0f3d2f;
+  border: 3.5px solid rgba(255, 255, 255, 0.95);
+  border-radius: 24px;
   overflow: hidden;
   cursor: pointer;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
-  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
   display: flex;
   flex-direction: column;
 }
 
 .catalog-card-item:hover {
-  transform: translateY(-6px);
+  transform: translateY(-8px);
   border-color: #ffffff;
   box-shadow:
-    0 20px 48px rgba(0, 0, 0, 0.65),
-    0 0 22px rgba(56, 178, 140, 0.35);
+    0 24px 56px rgba(0, 0, 0, 0.7),
+    0 0 28px rgba(52, 211, 153, 0.4);
 }
 
+/* Hero Scale Media Box: Full impact, bold and large without black letterboxing */
 .catalog-card-media {
   position: relative;
   width: 100%;
-  height: 220px;
+  height: clamp(340px, 46vh, 410px);
   overflow: hidden;
   background: #091c15;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px;
   box-sizing: border-box;
 }
 
 .catalog-card-img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center top;
   display: block;
-  transition: transform 0.4s ease;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.45));
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .catalog-card-item:hover .catalog-card-img {
-  transform: scale(1.05);
+  transform: scale(1.04);
+}
+
+.catalog-badges-wrap {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  z-index: 10;
+}
+
+.catalog-cat-badge {
+  background: #ffffff;
+  color: #0b3125;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  display: inline-block;
+}
+
+.catalog-format-badge {
+  background: #10b981;
+  color: #ffffff;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+  display: inline-block;
 }
 
 .catalog-gallery-badge {
   position: absolute;
-  bottom: 12px;
-  right: 12px;
-  background: rgba(0, 0, 0, 0.82);
-  backdrop-filter: blur(4px);
+  bottom: 14px;
+  right: 14px;
+  background: rgba(15, 23, 42, 0.82);
+  backdrop-filter: blur(8px);
   color: #ffffff;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Fredoka', sans-serif;
   font-size: 11px;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  font-weight: 800;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  z-index: 10;
 }
 
 .catalog-card-content {
-  padding: 18px 20px 20px;
+  padding: 18px 22px 22px;
   display: flex;
   flex-direction: column;
   flex: 1;
+  background: linear-gradient(180deg, rgba(15, 61, 47, 0.98) 0%, rgba(10, 42, 33, 1) 100%);
 }
 
 .catalog-card-title {
-  font-family: 'Fredoka', sans-serif;
-  font-size: 16.5px;
+  font-family: 'Fredoka', 'Plus Jakarta Sans', sans-serif;
+  font-size: 18px;
   font-weight: 800;
   margin: 0 0 6px 0;
   line-height: 1.35;
   color: #ffffff;
-  min-height: 44px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 
 .catalog-card-tagline {
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 12.5px;
-  color: #a3d9c9;
+  color: #a7f3d0;
   margin: 0 0 14px 0;
   line-height: 1.45;
-  min-height: 36px;
 }
 
 .catalog-tools-list {
@@ -2355,21 +2364,24 @@
 }
 
 .catalog-tool-tag {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #e2e8f0;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #ffffff;
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 11px;
   font-weight: 700;
-  padding: 3px 9px;
-  border-radius: 6px;
+  padding: 4px 10px;
+  border-radius: 8px;
 }
 
 /* Dedicated Action CTA Button */
 .catalog-card-action-bar {
   margin-top: auto;
   padding-top: 14px;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .catalog-cta-btn {

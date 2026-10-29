@@ -25,6 +25,11 @@ export default function CmsAuthModal({ isOpen, onAuthenticated, onClose }) {
       resetPasskeyAttempts();
       setPasswordError('');
       setPasswordInput('');
+      try {
+        sessionStorage.setItem('studio_cms_authenticated', 'true');
+      } catch (err) {
+        console.error('Session storage error:', err);
+      }
       onAuthenticated();
     } else {
       recordFailedPasskey();
@@ -98,3 +103,4 @@ export default function CmsAuthModal({ isOpen, onAuthenticated, onClose }) {
     </div>
   );
 }
+

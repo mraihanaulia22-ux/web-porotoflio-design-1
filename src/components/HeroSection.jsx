@@ -97,3 +97,4 @@ export default function HeroSection({ onScrollToMore }) {
     </section>
   );
 }
+

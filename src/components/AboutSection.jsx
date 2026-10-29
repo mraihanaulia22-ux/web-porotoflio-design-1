@@ -157,3 +157,4 @@ export default function AboutSection({ skills, certificates, onOpenCertPreview }
     </section>
   );
 }
+
