@@ -72,13 +72,20 @@ export default function ProjectDetailModal({ project, isOpen, onClose }) {
 
         {/* Modal Main Content (2 Columns fit in screen) */}
         <div className="modal-body-grid">
-          {/* Left Column: Master Preview Card */}
+          {/* Left Column: Master Preview Card with 100% Auto-Fit Lock */}
           <div className="modal-preview-column">
             <div className="master-image-card">
+              {/* Soft Ambient Backdrop Atmosphere */}
+              <div
+                className="master-backdrop-blur"
+                style={{ backgroundImage: `url("${currentImage}")` }}
+                aria-hidden="true"
+              />
+              {/* 100% Full Fit Image without any crop or distortion */}
               <img
                 src={currentImage}
                 alt={galleryList[selectedImageIndex]?.title || project.title}
-                className="master-preview-img"
+                className="master-preview-img-contain"
               />
               <div className="preview-caption-pill">
                 {galleryList[selectedImageIndex]?.title || project.title}
@@ -88,9 +95,12 @@ export default function ProjectDetailModal({ project, isOpen, onClose }) {
 
           {/* Right Column: Case Study Info + Interactive Thumbnail Switcher */}
           <div className="modal-info-column">
-            {/* Meta Tags */}
+            {/* Meta Tags with Deliverable Format */}
             <div className="project-tags-row">
               <span className="project-category-badge">{project.category}</span>
+              {project.mediaFormat && (
+                <span className="project-format-badge">🏷️ {project.mediaFormat}</span>
+              )}
               <span className="project-year-badge">{project.year}</span>
             </div>
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PROJECT_CATEGORIES, PROJECTS_DATA } from '../data/projects';
+import { PROJECT_CATEGORIES, DESIGN_FORMAT_TYPES, PROJECTS_DATA } from '../data/projects';
 
 export default function CmsAdminDashboard({ onClose, onSaveProjects, initialProjects }) {
   const [activeTab, setActiveTab] = useState('projects'); // 'projects', 'skills', 'certificates'
@@ -12,6 +12,7 @@ export default function CmsAdminDashboard({ onClose, onSaveProjects, initialProj
     id: '',
     title: '',
     category: 'UMKM BRAND',
+    mediaFormat: 'Poster & Feed Sosmed',
     tagline: '',
     tools: ['Adobe Illustrator', 'Adobe Photoshop'],
     client: '',
@@ -113,6 +114,7 @@ export default function CmsAdminDashboard({ onClose, onSaveProjects, initialProj
     setEditingProject(project);
     setFormData({
       ...project,
+      mediaFormat: project.mediaFormat || 'Poster & Feed Sosmed',
       tools: [...(project.tools || [])],
       gallery: [...(project.gallery || [])],
     });
@@ -123,6 +125,7 @@ export default function CmsAdminDashboard({ onClose, onSaveProjects, initialProj
       id: `project-${Date.now()}`,
       title: '',
       category: 'UMKM BRAND',
+      mediaFormat: 'Spanduk & Banner Promosi',
       tagline: '',
       tools: ['Adobe Illustrator', 'Adobe Photoshop'],
       client: '',
@@ -132,7 +135,7 @@ export default function CmsAdminDashboard({ onClose, onSaveProjects, initialProj
       gallery: [
         {
           id: `g-${Date.now()}-1`,
-          title: 'Materi Feed Utama',
+          title: 'Materi Utama',
           image: projectsList[0]?.coverImage || '',
         },
       ],
@@ -303,7 +306,12 @@ export default function CmsAdminDashboard({ onClose, onSaveProjects, initialProj
                     <div key={project.id} className="cms-project-card">
                       <div className="cms-card-img-wrap">
                         <img src={project.coverImage} alt={project.title} className="cms-card-thumb" />
-                        <span className="cms-badge-category">{project.category}</span>
+                        <div className="cms-card-badge-row">
+                          <span className="cms-badge-category">{project.category}</span>
+                          {project.mediaFormat && (
+                            <span className="cms-badge-format">{project.mediaFormat}</span>
+                          )}
+                        </div>
                       </div>
 
                       <div className="cms-card-details">
@@ -370,7 +378,7 @@ export default function CmsAdminDashboard({ onClose, onSaveProjects, initialProj
                       </div>
 
                       <div className="cms-input-group">
-                        <label>Kategori Karya</label>
+                        <label>Kategori Industri / Brand</label>
                         <select
                           value={formData.category}
                           onChange={(e) => setFormData({ ...formData, category: e.target.value })}
@@ -378,6 +386,20 @@ export default function CmsAdminDashboard({ onClose, onSaveProjects, initialProj
                           {PROJECT_CATEGORIES.filter((c) => c !== 'ALL').map((cat) => (
                             <option key={cat} value={cat}>
                               {cat}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="cms-input-group">
+                        <label>Format Media Desain (Deliverable)</label>
+                        <select
+                          value={formData.mediaFormat || 'Poster & Feed Sosmed'}
+                          onChange={(e) => setFormData({ ...formData, mediaFormat: e.target.value })}
+                        >
+                          {DESIGN_FORMAT_TYPES.map((fmt) => (
+                            <option key={fmt} value={fmt}>
+                              🏷️ {fmt}
                             </option>
                           ))}
                         </select>

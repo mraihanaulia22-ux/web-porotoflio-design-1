@@ -14,11 +14,20 @@ export const PROJECT_CATEGORIES = [
   'FASHION & APPAREL',
 ];
 
+export const DESIGN_FORMAT_TYPES = [
+  'Poster & Feed Sosmed',
+  'Spanduk & Banner Promosi',
+  'Packaging & Label Produk',
+  'Branding & Identitas Visual',
+  'Brosur & Materi Cetak',
+];
+
 export const PROJECTS_DATA = [
   {
     id: 'verde-harvest',
     title: 'Verde Harvest - Glow Immune & Green Detox',
     category: 'UMKM BRAND',
+    mediaFormat: 'Poster & Feed Sosmed',
     tagline: 'Segarkan Tubuhmu Dari Dalam',
     coverImage: verdeMain,
     gallery: [
@@ -48,6 +57,7 @@ export const PROJECTS_DATA = [
     id: 'mie-ayam-kampung',
     title: 'Waktunya! Mie Ayam - Promo Spanduk & Feed',
     category: 'UMKM BRAND',
+    mediaFormat: 'Spanduk & Banner Promosi',
     tagline: 'Waktunya ! Mie Ayam Lezat & Halal',
     coverImage: mieAyamImg,
     gallery: [
@@ -67,6 +77,7 @@ export const PROJECTS_DATA = [
     id: 'sambal-sedap-cobek',
     title: 'Sambal Sedap - Sambal Cobek Panas Nusantara',
     category: 'UMKM BRAND',
+    mediaFormat: 'Poster & Feed Sosmed',
     tagline: 'Sensasi Pedas Sambal Cobek Asli',
     coverImage: sambalImg,
     gallery: [
@@ -86,6 +97,7 @@ export const PROJECTS_DATA = [
     id: 'kopi-senja-roastery',
     title: 'Kopi Senja - Signature Cold Brew Branding',
     category: 'COFFEE SHOP',
+    mediaFormat: 'Packaging & Label Produk',
     tagline: 'Kopi Nusantara Dari Hati',
     coverImage: verdeMain, // Fallback preview
     gallery: [
@@ -105,6 +117,7 @@ export const PROJECTS_DATA = [
     id: 'gentlemen-barbershop',
     title: 'The Classic Cut - Barbershop Social Assets',
     category: 'JASA/LOCAL SERVICES',
+    mediaFormat: 'Brosur & Materi Cetak',
     tagline: 'Gaya Rambut Presisi & Berkelas',
     coverImage: sambalImg, // Fallback preview
     gallery: [
@@ -124,6 +137,7 @@ export const PROJECTS_DATA = [
     id: 'urban-apparel-streetwear',
     title: 'Hustle Culture - Streetwear Merch Graphics',
     category: 'FASHION & APPAREL',
+    mediaFormat: 'Branding & Identitas Visual',
     tagline: 'Bold Typography & Edgy Illustrations',
     coverImage: mieAyamImg, // Fallback preview
     gallery: [

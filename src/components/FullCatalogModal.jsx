@@ -95,7 +95,12 @@ export default function FullCatalogModal({ isOpen, onClose, onSelectProject, pro
                     className="catalog-card-img"
                     loading="lazy"
                   />
-                  <span className="catalog-cat-badge">{project.category}</span>
+                  <div className="catalog-badges-wrap">
+                    <span className="catalog-cat-badge">{project.category}</span>
+                    {project.mediaFormat && (
+                      <span className="catalog-format-badge">{project.mediaFormat}</span>
+                    )}
+                  </div>
                   <span className="catalog-gallery-badge">
                     {project.gallery?.length || 1} Gambar
                   </span>
