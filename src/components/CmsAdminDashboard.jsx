@@ -31,6 +31,84 @@ export default function CmsAdminDashboard({ onClose, onSaveProjects, initialProj
     'After Effects',
   ];
 
+  // Helper untuk kompresi gambar di browser dan konversi ke Data URL WebP
+  const compressImage = (file, maxWidth = 1080, quality = 0.85) => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+
+          if (width > maxWidth) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          resolve(canvas.toDataURL('image/webp', quality));
+        };
+        img.onerror = () => resolve(e.target.result);
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  // Upload Cover Image
+  const handleCoverUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const compressedUrl = await compressImage(file, 1080, 0.85);
+    setFormData((prev) => ({
+      ...prev,
+      coverImage: compressedUrl,
+    }));
+  };
+
+  // Upload Multiple Gallery Images
+  const handleGalleryUpload = async (e) => {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+
+    const newItems = await Promise.all(
+      files.map(async (file, idx) => {
+        const compressedUrl = await compressImage(file, 900, 0.85);
+        return {
+          id: `thumb-${Date.now()}-${idx}`,
+          title: file.name.replace(/\.[^/.]+$/, ''),
+          image: compressedUrl,
+        };
+      })
+    );
+
+    setFormData((prev) => ({
+      ...prev,
+      gallery: [...(prev.gallery || []), ...newItems],
+    }));
+  };
+
+  // Remove single gallery image
+  const handleRemoveGalleryItem = (idToRemove) => {
+    setFormData((prev) => ({
+      ...prev,
+      gallery: prev.gallery.filter((item) => item.id !== idToRemove),
+    }));
+  };
+
+  // Update gallery title
+  const handleUpdateGalleryTitle = (id, newTitle) => {
+    setFormData((prev) => ({
+      ...prev,
+      gallery: prev.gallery.map((item) => (item.id === id ? { ...item, title: newTitle } : item)),
+    }));
+  };
+
   const handleStartEdit = (project) => {
     setEditingProject(project);
     setFormData({
@@ -358,25 +436,82 @@ export default function CmsAdminDashboard({ onClose, onSaveProjects, initialProj
 
                     {/* Right Form Inputs: Cover, Gallery, Description */}
                     <div className="cms-form-col">
+                      {/* Cover Image Upload Area */}
                       <div className="cms-input-group">
-                        <label>Preview Gambar Sampul Utama</label>
-                        <div className="cms-image-upload-preview">
-                          <img src={formData.coverImage} alt="Cover Preview" className="cms-preview-img" />
-                          <div className="cms-img-prompt">
-                            <span>Gambar Utama Tampil di Carousel Setir</span>
-                          </div>
+                        <label>Gambar Sampul Utama (Cover Carousel & Katalog)</label>
+                        <div className="cms-image-upload-box">
+                          {formData.coverImage ? (
+                            <div className="cms-cover-preview-wrapper">
+                              <img src={formData.coverImage} alt="Cover Preview" className="cms-cover-large-preview" />
+                              <label htmlFor="cover-file-input" className="cms-upload-change-btn">
+                                🔄 Ganti Foto Sampul
+                              </label>
+                            </div>
+                          ) : (
+                            <label htmlFor="cover-file-input" className="cms-upload-placeholder">
+                              <span className="cms-upload-icon">📸</span>
+                              <span>Klik untuk Unggah Gambar Sampul</span>
+                              <small>Mendukung JPG, PNG, WEBP (Otomatis Dioptimasi)</small>
+                            </label>
+                          )}
+                          <input
+                            id="cover-file-input"
+                            type="file"
+                            accept="image/*"
+                            style={{ display: 'none' }}
+                            onChange={handleCoverUpload}
+                          />
                         </div>
                       </div>
 
+                      {/* Multiple Gallery & Thumbnail Upload Area */}
                       <div className="cms-input-group">
-                        <label>Galeri Variasi Desain (Untuk Thumbnail Switcher)</label>
-                        <div className="cms-gallery-manager">
-                          {formData.gallery?.map((item, idx) => (
-                            <div key={item.id || idx} className="cms-gallery-item-chip">
-                              <img src={item.image} alt={item.title} className="cms-gallery-mini-thumb" />
-                              <span className="cms-gallery-item-title">{item.title}</span>
+                        <div className="cms-label-with-action">
+                          <label>Galeri Thumbnail & Variasi Mockup ({formData.gallery?.length || 0})</label>
+                          <label htmlFor="gallery-file-input" className="cms-mini-add-btn">
+                            + Tambah Foto
+                          </label>
+                          <input
+                            id="gallery-file-input"
+                            type="file"
+                            accept="image/*"
+                            multiple
+                            style={{ display: 'none' }}
+                            onChange={handleGalleryUpload}
+                          />
+                        </div>
+                        <p className="cms-field-hint">
+                          Foto ini bisa diklik oleh pengunjung di halaman detail karya untuk berganti tampilan secara interaktif.
+                        </p>
+
+                        <div className="cms-gallery-cards-grid">
+                          {formData.gallery?.map((item) => (
+                            <div key={item.id} className="cms-gallery-editor-card">
+                              <img src={item.image} alt={item.title} className="cms-gallery-card-thumb" />
+                              <div className="cms-gallery-card-info">
+                                <input
+                                  type="text"
+                                  value={item.title}
+                                  onChange={(e) => handleUpdateGalleryTitle(item.id, e.target.value)}
+                                  placeholder="Nama variasi desain"
+                                  className="cms-gallery-title-input"
+                                />
+                                <button
+                                  type="button"
+                                  className="cms-gallery-del-btn"
+                                  onClick={() => handleRemoveGalleryItem(item.id)}
+                                  title="Hapus foto ini"
+                                >
+                                  ✕ Hapus
+                                </button>
+                              </div>
                             </div>
                           ))}
+                          {(!formData.gallery || formData.gallery.length === 0) && (
+                            <div className="cms-gallery-empty-prompt">
+                              Belum ada foto variasi. Klik tombol "+ Tambah Foto" untuk mengunggah mockup lainnya.
+                            </div>
+                          )}
                         </div>
                       </div>
 

@@ -42,8 +42,8 @@ function App() {
   const [isCmsAuthenticated, setIsCmsAuthenticated] = useState(false);
   const [passwordInput, setPasswordInput] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const STUDIO_PASSWORD = 'raihan123'; // Default secure PIN/Password
-  
+  const STUDIO_PASSWORD = 'perumahan1234'; // Default secure PIN/Password
+
   // LocalStorage persistence for CMS projects data
   const [projectsData, setProjectsData] = useState(() => {
     try {
@@ -102,7 +102,7 @@ function App() {
     navigateToSection(0);
     logoClickRef.current.count += 1;
     if (logoClickRef.current.timer) clearTimeout(logoClickRef.current.timer);
-    
+
     if (logoClickRef.current.count >= 3) {
       setIsCmsOpen(true);
       logoClickRef.current.count = 0;

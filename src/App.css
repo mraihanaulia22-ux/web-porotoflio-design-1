@@ -2690,60 +2690,184 @@
   font-weight: 800;
 }
 
-.cms-image-upload-preview {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  background: #071712;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px dashed rgba(255, 255, 255, 0.25);
+/* Modern Image Uploader in CMS */
+.cms-image-upload-box {
+  background: #061711;
+  border: 1.5px dashed rgba(56, 178, 140, 0.4);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.22s ease;
 }
 
-.cms-preview-img {
-  width: 70px;
-  height: 90px;
-  object-fit: cover;
-  border-radius: 6px;
+.cms-image-upload-box:hover {
+  border-color: #38b28c;
+  background: #081d15;
 }
 
-.cms-img-prompt {
-  font-size: 12px;
-  color: #94a3b8;
-}
-
-.cms-gallery-manager {
-  display: flex;
-  gap: 10px;
-  overflow-x: auto;
-  padding: 6px 0;
-}
-
-.cms-gallery-item-chip {
+.cms-upload-placeholder {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  background: #071712;
-  padding: 6px;
+  justify-content: center;
+  padding: 30px 20px;
+  cursor: pointer;
+  color: #92b8aa;
+  gap: 8px;
+  text-align: center;
+}
+
+.cms-upload-icon {
+  font-size: 32px;
+}
+
+.cms-upload-placeholder span {
+  font-weight: 700;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.cms-upload-placeholder small {
+  font-size: 11.5px;
+  color: #64748b;
+}
+
+.cms-cover-preview-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 14px;
+  background: #05140e;
+}
+
+.cms-cover-large-preview {
+  width: 100%;
+  max-height: 220px;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+}
+
+.cms-upload-change-btn {
+  margin-top: 10px;
+  background: rgba(56, 178, 140, 0.15);
+  border: 1px solid #38b28c;
+  color: #ffffff;
+  padding: 6px 14px;
   border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.cms-gallery-mini-thumb {
-  width: 50px;
-  height: 65px;
-  object-fit: cover;
-  border-radius: 4px;
+.cms-upload-change-btn:hover {
+  background: #38b28c;
 }
 
-.cms-gallery-item-title {
-  font-size: 10px;
-  color: #94a3b8;
-  max-width: 60px;
-  white-space: nowrap;
+/* Gallery & Thumbnails Management */
+.cms-label-with-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cms-mini-add-btn {
+  background: #195f49;
+  border: 1px solid #38b28c;
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cms-mini-add-btn:hover {
+  background: #38b28c;
+}
+
+.cms-field-hint {
+  font-size: 11.5px;
+  color: #64748b;
+  margin: -4px 0 8px 0;
+  line-height: 1.4;
+}
+
+.cms-gallery-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 10px;
+  max-height: 240px;
+  overflow-y: auto;
+  padding: 4px 2px;
+}
+
+.cms-gallery-editor-card {
+  background: #061711;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
   overflow: hidden;
-  text-overflow: ellipsis;
+  display: flex;
+  flex-direction: column;
+}
+
+.cms-gallery-card-thumb {
+  width: 100%;
+  height: 90px;
+  object-fit: cover;
+}
+
+.cms-gallery-card-info {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cms-gallery-title-input {
+  width: 100%;
+  background: #020b08;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  color: #ffffff;
+  font-size: 11px;
+  padding: 4px 6px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.cms-gallery-title-input:focus {
+  border-color: #38b28c;
+}
+
+.cms-gallery-del-btn {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #ff8080;
+  border-radius: 4px;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 3px 6px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.cms-gallery-del-btn:hover {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+.cms-gallery-empty-prompt {
+  grid-column: 1 / -1;
+  background: #061711;
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 18px;
+  text-align: center;
+  font-size: 12px;
+  color: #64748b;
 }
 
 .cms-form-actions-footer {
