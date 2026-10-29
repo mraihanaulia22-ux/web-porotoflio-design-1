@@ -33,10 +33,16 @@ function App() {
   const [showUpBtn, setShowUpBtn] = useState(false);
   const [currentSectionIdx, setCurrentSectionIdx] = useState(0);
   const [isCatalogOpen, setIsCatalogOpen] = useState(false);
-  const [selectedCatalogProject, setSelectedCatalogProject] = useState(null);
+  const [selectedProjectDetail, setSelectedProjectDetail] = useState(null);
   const [isCmsOpen, setIsCmsOpen] = useState(() => {
     return window.location.pathname.includes('/keystatic') || window.location.pathname.includes('/admin');
   });
+
+  // CMS Password Gate State
+  const [isCmsAuthenticated, setIsCmsAuthenticated] = useState(false);
+  const [passwordInput, setPasswordInput] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const STUDIO_PASSWORD = 'raihan123'; // Default secure PIN/Password
   
   // LocalStorage persistence for CMS projects data
   const [projectsData, setProjectsData] = useState(() => {
@@ -54,6 +60,27 @@ function App() {
       localStorage.setItem('studio_cms_projects', JSON.stringify(updated));
     } catch (e) {
       console.error('Failed to save to localStorage:', e);
+    }
+  };
+
+  const handlePasswordSubmit = (e) => {
+    e.preventDefault();
+    if (passwordInput.trim() === STUDIO_PASSWORD) {
+      setIsCmsAuthenticated(true);
+      setPasswordError('');
+      setPasswordInput('');
+    } else {
+      setPasswordError('Kata sandi salah! Akses ditolak.');
+    }
+  };
+
+  const handleCloseCms = () => {
+    setIsCmsOpen(false);
+    setIsCmsAuthenticated(false);
+    setPasswordInput('');
+    setPasswordError('');
+    if (window.location.pathname.includes('/keystatic') || window.location.pathname.includes('/admin')) {
+      window.history.pushState({}, '', '/');
     }
   };
 
@@ -113,15 +140,16 @@ function App() {
     }, 800);
   };
 
-  // One-gesture Fullpage Gliding Wheel & Touch Listener
+  // Check if any modal or overlay is active
+  const isModalActive = isCatalogOpen || Boolean(selectedProjectDetail) || isCmsOpen;
+
+  // One-gesture Fullpage Gliding Wheel & Touch Listener with full reactivity
   useEffect(() => {
-    if (isCatalogOpen || selectedCatalogProject || isCmsOpen) return;
+    if (isModalActive) return;
 
     let touchStartY = 0;
 
     const handleWheel = (e) => {
-      if (isCatalogOpen || selectedCatalogProject || isCmsOpen) return;
-
       // Prevent slow pixel-by-pixel scrolling
       e.preventDefault();
 
@@ -141,7 +169,7 @@ function App() {
     };
 
     const handleTouchEnd = (e) => {
-      if (isGlidingRef.current || isCatalogOpen || selectedCatalogProject) return;
+      if (isGlidingRef.current) return;
       const touchEndY = e.changedTouches[0].clientY;
       const diff = touchStartY - touchEndY;
 
@@ -153,7 +181,6 @@ function App() {
     };
 
     const handleKey = (e) => {
-      if (isCatalogOpen || selectedCatalogProject) return;
       if (e.key === 'ArrowDown' || e.key === 'PageDown') {
         e.preventDefault();
         navigateToSection(currentSectionIdx + 1);
@@ -174,7 +201,7 @@ function App() {
       window.removeEventListener('touchend', handleTouchEnd);
       window.removeEventListener('keydown', handleKey);
     };
-  }, [currentSectionIdx, isCatalogOpen, selectedCatalogProject]);
+  }, [currentSectionIdx, isModalActive]);
 
   const handleNavClick = (link) => {
     if (link === 'HOME') {
@@ -469,6 +496,7 @@ function App() {
         <ProjectSection
           projects={projectsData}
           onOpenFullCatalog={() => setIsCatalogOpen(true)}
+          onSelectProject={(project) => setSelectedProjectDetail(project)}
           isInView={currentSectionIdx === 2}
         />
       </div>
@@ -485,35 +513,77 @@ function App() {
         isOpen={isCatalogOpen}
         onClose={() => setIsCatalogOpen(false)}
         onSelectProject={(project) => {
-          setSelectedCatalogProject(project);
+          setSelectedProjectDetail(project);
         }}
       />
 
-      {/* Detail Modal opened directly from Full Catalog */}
+      {/* Project Detail Dedicated View (Root level, di luar meja kayu & z-index tertinggi) */}
       <ProjectDetailModal
-        project={selectedCatalogProject}
-        isOpen={Boolean(selectedCatalogProject)}
-        onClose={() => setSelectedCatalogProject(null)}
+        project={selectedProjectDetail}
+        isOpen={Boolean(selectedProjectDetail)}
+        onClose={() => setSelectedProjectDetail(null)}
       />
 
-      {/* Interactive CMS Studio Admin Dashboard */}
-      {isCmsOpen && (
+      {/* CMS Password Gate Modal (Sebelum membuka Studio CMS) */}
+      {isCmsOpen && !isCmsAuthenticated && (
+        <div className="cms-auth-overlay">
+          <div className="cms-auth-card">
+            <div className="cms-auth-icon-circle">🔒</div>
+            <h3 className="cms-auth-title">STUDIO CMS ACCESS</h3>
+            <p className="cms-auth-desc">
+              Area terbatas. Masukkan kata sandi studio untuk mengelola portofolio & sertifikat.
+            </p>
+
+            <form onSubmit={handlePasswordSubmit} className="cms-auth-form">
+              <input
+                type="password"
+                className="cms-auth-input"
+                placeholder="Masukkan kata sandi..."
+                value={passwordInput}
+                onChange={(e) => {
+                  setPasswordInput(e.target.value);
+                  if (passwordError) setPasswordError('');
+                }}
+                autoFocus
+              />
+
+              {passwordError && (
+                <div className="cms-auth-error-msg">{passwordError}</div>
+              )}
+
+              <div className="cms-auth-btn-row">
+                <button
+                  type="button"
+                  className="cms-auth-cancel-btn"
+                  onClick={handleCloseCms}
+                >
+                  Batal
+                </button>
+                <button
+                  type="submit"
+                  className="cms-auth-submit-btn"
+                >
+                  Masuk Studio
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Interactive CMS Studio Admin Dashboard (Hanya jika lolos otentikasi) */}
+      {isCmsOpen && isCmsAuthenticated && (
         <CmsAdminDashboard
           initialProjects={projectsData}
           onSaveProjects={handleSaveProjects}
-          onClose={() => {
-            setIsCmsOpen(false);
-            if (window.location.pathname.includes('/keystatic') || window.location.pathname.includes('/admin')) {
-              window.history.pushState({}, '', '/');
-            }
-          }}
+          onClose={handleCloseCms}
         />
       )}
 
-      {/* Persistent Floating UP Button - Follows user across all lower sections, hides in Home */}
+      {/* Persistent Floating UP Button - Sembunyikan saat ada modal/detail aktif */}
       <button
         type="button"
-        className={`floating-up-btn ${showUpBtn ? 'floating-up-visible' : 'floating-up-hidden'}`}
+        className={`floating-up-btn ${showUpBtn && !isModalActive ? 'floating-up-visible' : 'floating-up-hidden'}`}
         onClick={scrollToTop}
         title="Kembali ke atas (Home)"
         aria-label="Kembali ke atas"

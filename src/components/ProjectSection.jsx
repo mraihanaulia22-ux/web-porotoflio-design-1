@@ -1,12 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { PROJECT_CATEGORIES, PROJECTS_DATA } from '../data/projects';
-import ProjectDetailModal from './ProjectDetailModal';
 
-export default function ProjectSection({ onOpenFullCatalog, isInView, projects }) {
+export default function ProjectSection({ onOpenFullCatalog, isInView, projects, onSelectProject }) {
   // Default to UMKM BRAND or ALL
   const [selectedCategory, setSelectedCategory] = useState('UMKM BRAND');
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [activeProjectModal, setActiveProjectModal] = useState(null);
 
   const allProjects = projects || PROJECTS_DATA;
 
@@ -184,7 +182,7 @@ export default function ProjectSection({ onOpenFullCatalog, isInView, projects }
                   }}
                   onClick={() => {
                     if (isCenter) {
-                      setActiveProjectModal(project);
+                      if (onSelectProject) onSelectProject(project);
                     } else {
                       setCurrentIndex(idx);
                     }
@@ -235,13 +233,6 @@ export default function ProjectSection({ onOpenFullCatalog, isInView, projects }
           </div>
         </div>
       </div>
-
-      {/* Project Detail Modal */}
-      <ProjectDetailModal
-        project={activeProjectModal}
-        isOpen={Boolean(activeProjectModal)}
-        onClose={() => setActiveProjectModal(null)}
-      />
     </section>
   );
 }
