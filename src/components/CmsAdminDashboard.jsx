@@ -180,12 +180,27 @@ export default function CmsAdminDashboard({ onClose, onSaveProjects, initialProj
 
           <div className="cms-topbar-actions">
             {saveNotification && (
-              <span className="save-toast-pill">✓ Perubahan Berhasil Disimpan!</span>
+              <span className="save-toast-pill">✓ Perubahan Berhasil Disimpan ke Browser!</span>
             )}
             {activeTab === 'projects' && !editingProject && (
-              <button type="button" className="cms-add-btn" onClick={handleStartNew}>
-                + Tambah Proyek Baru
-              </button>
+              <>
+                <button
+                  type="button"
+                  className="cms-add-btn"
+                  onClick={() => {
+                    const code = `export const PROJECTS_DATA = ${JSON.stringify(projectsList, null, 2)};`;
+                    navigator.clipboard.writeText(code);
+                    alert('✓ Kode data portofolio berhasil disalin ke clipboard! Anda bisa menempelkannya ke src/data/projects.js');
+                  }}
+                  style={{ background: '#0e3a2f', border: '1px solid #38b28c' }}
+                  title="Salin kode data untuk disimpan permanen ke repository GitHub"
+                >
+                  📋 Salin Data projects.js
+                </button>
+                <button type="button" className="cms-add-btn" onClick={handleStartNew}>
+                  + Tambah Proyek Baru
+                </button>
+              </>
             )}
           </div>
         </header>

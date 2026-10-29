@@ -37,7 +37,54 @@ function App() {
   const [isCmsOpen, setIsCmsOpen] = useState(() => {
     return window.location.pathname.includes('/keystatic') || window.location.pathname.includes('/admin');
   });
-  const [projectsData, setProjectsData] = useState(PROJECTS_DATA);
+  
+  // LocalStorage persistence for CMS projects data
+  const [projectsData, setProjectsData] = useState(() => {
+    try {
+      const saved = localStorage.getItem('studio_cms_projects');
+      return saved ? JSON.parse(saved) : PROJECTS_DATA;
+    } catch {
+      return PROJECTS_DATA;
+    }
+  });
+
+  const handleSaveProjects = (updated) => {
+    setProjectsData(updated);
+    try {
+      localStorage.setItem('studio_cms_projects', JSON.stringify(updated));
+    } catch (e) {
+      console.error('Failed to save to localStorage:', e);
+    }
+  };
+
+  // Secret shortcut (Ctrl+Shift+A) to open CMS admin
+  useEffect(() => {
+    const handleSecretKey = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'A' || e.key === 'a' || e.key === 'K' || e.key === 'k')) {
+        e.preventDefault();
+        setIsCmsOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleSecretKey);
+    return () => window.removeEventListener('keydown', handleSecretKey);
+  }, []);
+
+  // Secret 3x click on logo to open CMS
+  const logoClickRef = React.useRef({ count: 0, timer: null });
+  const handleLogoSecretClick = () => {
+    navigateToSection(0);
+    logoClickRef.current.count += 1;
+    if (logoClickRef.current.timer) clearTimeout(logoClickRef.current.timer);
+    
+    if (logoClickRef.current.count >= 3) {
+      setIsCmsOpen(true);
+      logoClickRef.current.count = 0;
+    } else {
+      logoClickRef.current.timer = setTimeout(() => {
+        logoClickRef.current.count = 0;
+      }, 1500);
+    }
+  };
 
   const isGlidingRef = React.useRef(false);
   const sections = ['hero-section', 'about-section', 'project-section', 'contact-section'];
@@ -154,6 +201,13 @@ function App() {
       {/* Top Persistent Global Navbar: visible in HOME and CONTACT sections */}
       <header className={`navbar-wrapper ${isNavbarVisible ? 'navbar-visible' : 'navbar-hidden'}`}>
         <nav className="navbar-container">
+          {/* White square logo / icon button anchored on the far left (Klik 3x rahasia untuk buka CMS) */}
+          <div
+            className="nav-square-btn"
+            onClick={handleLogoSecretClick}
+            title="Home (Klik 3x untuk Studio CMS)"
+            aria-label="Kembali ke Home"
+          />
 
           {/* Nav Menu Links */}
           <div className="nav-menu">
@@ -446,7 +500,7 @@ function App() {
       {isCmsOpen && (
         <CmsAdminDashboard
           initialProjects={projectsData}
-          onSaveProjects={(updated) => setProjectsData(updated)}
+          onSaveProjects={handleSaveProjects}
           onClose={() => {
             setIsCmsOpen(false);
             if (window.location.pathname.includes('/keystatic') || window.location.pathname.includes('/admin')) {
@@ -455,17 +509,6 @@ function App() {
           }}
         />
       )}
-
-      {/* Floating Quick CMS Access Button in Live Web */}
-      <button
-        type="button"
-        className="cms-quick-access-btn"
-        onClick={() => setIsCmsOpen(true)}
-        title="Buka Studio CMS Admin (Kelola Portofolio, Skill & Sertifikat)"
-      >
-        <span>⚙️</span>
-        <span>STUDIO CMS</span>
-      </button>
 
       {/* Persistent Floating UP Button - Follows user across all lower sections, hides in Home */}
       <button
