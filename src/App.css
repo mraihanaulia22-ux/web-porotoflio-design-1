@@ -554,88 +554,108 @@
     height: auto;
     min-height: 100vh;
     max-height: none;
-    padding: 14px 12px 36px;
-    overflow-y: auto;
+    padding: 72px 14px 32px;
+    overflow-y: visible;
     justify-content: flex-start;
-    gap: 24px;
+    gap: 20px;
+    scroll-snap-align: none;
   }
 
-  /* Compact Navbar */
+  /* Compact Navbar Floating Island */
   .navbar-wrapper {
     width: 100%;
+    padding: 0 12px;
+    box-sizing: border-box;
+    top: 12px;
   }
 
   .navbar-container {
     width: 100%;
-    max-width: 480px;
-    gap: 8px;
-    padding: 8px 12px 8px 10px;
-    border-radius: 18px;
+    max-width: 440px;
+    gap: 6px;
+    padding: 6px 12px 6px 10px;
+    border-radius: 16px;
     justify-content: space-between;
   }
 
   .nav-square-btn {
-    width: 32px;
-    height: 32px;
-    border-radius: 9px;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    flex-shrink: 0;
   }
 
   .nav-menu {
-    gap: 8px;
-    overflow-x: auto;
-    padding: 2px 0;
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px;
     margin: 0;
-    -webkit-overflow-scrolling: touch;
+    overflow: visible;
   }
 
   .nav-item {
-    font-size: 13px;
-    padding: 2px 4px;
-    letter-spacing: 0.3px;
+    font-size: 11.5px;
+    padding: 3px 4px;
+    letter-spacing: 0.2px;
+    font-weight: 800;
   }
 
   .nav-item-active {
-    font-size: 15px;
-    -webkit-text-stroke: 2px #ffffff;
+    font-size: 13px;
+    -webkit-text-stroke: 1.8px #ffffff;
   }
 
   /* Vertical Stage Layout */
   .stage-container {
-    margin-top: 5px;
+    margin-top: 0;
+    width: 100%;
   }
 
   .stage-content {
     flex-direction: column;
     align-items: center;
-    gap: 35px;
+    gap: 18px;
     max-height: none;
+    width: 100%;
   }
 
   .card-wrapper {
     margin-top: 0;
+    position: relative;
+    display: flex;
+    justify-content: center;
   }
 
   .id-card-img {
     height: auto;
-    width: 84vw;
-    max-width: 320px;
+    width: min(72vw, 250px);
+    max-width: 250px;
   }
 
   .sticker-wrapper {
-    top: calc(100% - 25px);
-    left: -10px;
+    top: calc(100% - 22px);
+    left: -8px;
     transform: rotate(-6deg);
   }
 
   .portofolio-sticker {
-    width: 58vw;
-    max-width: 220px;
+    width: min(52vw, 180px);
+    max-width: 180px;
+  }
+
+  .berkas-wrapper {
+    margin-top: 4px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
   }
 
   .berkas-img {
     height: auto;
-    width: 94vw;
-    max-width: 420px;
+    width: min(92vw, 340px);
+    max-width: 340px;
   }
 
   .ring-center {
@@ -643,23 +663,26 @@
   }
 
   .ring-bottom-right {
-    width: 150px;
-    height: 150px;
-    bottom: -20px;
-    right: -20px;
+    width: 140px;
+    height: 140px;
+    bottom: -15px;
+    right: -15px;
   }
 
   .hero-footer {
-    margin-top: 15px;
-    padding-bottom: 16px;
+    margin-top: 10px;
+    padding-bottom: 12px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
   }
 
   .bottom-pill-btn {
-    font-size: 15px;
-    padding: 10px 32px;
-    border-radius: 14px;
-    width: 90vw;
-    max-width: 340px;
+    font-size: 13.5px;
+    font-weight: 800;
+    padding: 9px 24px;
+    border-radius: 12px;
+    width: min(90vw, 320px);
     text-align: center;
   }
 }
@@ -1341,38 +1364,117 @@
 
 @media (max-width: 768px) {
   .about-section {
-    padding: 0 0 50px 0;
+    height: auto;
+    min-height: 100vh;
+    max-height: none;
+    padding: 0 0 70px 0;
+    overflow-y: visible;
+    scroll-snap-align: none;
   }
 
-  .pillar {
-    opacity: 0.65;
-  }
-
-  .pillar-left {
-    max-width: 14vw;
-  }
-
+  .wood-desk-stage .pillar,
+  .pillar-left,
   .pillar-right {
-    max-width: 14vw;
+    display: none !important;
+  }
+
+  .about-top-grid-wrapper {
+    height: 75px;
+    margin-bottom: 14px;
+  }
+
+  .about-top-grid-img {
+    height: 75px;
+    object-fit: cover;
+  }
+
+  .about-title-sticker {
+    font-size: clamp(24px, 6.8vw, 32px);
+    -webkit-text-stroke: 3px #ffffff;
+    filter: drop-shadow(0 3px 0 #0d2f24);
+  }
+
+  .about-content-container {
+    padding: 0 16px;
+    gap: 20px;
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+
+  .tentang-wrapper {
+    width: 100%;
+  }
+
+  .tentang-card {
+    padding: 16px 18px;
+    border-radius: 18px;
+  }
+
+  .tentang-text {
+    font-size: 13.5px;
+    line-height: 1.55;
+    padding-right: 0;
+  }
+
+  .skills-wrapper {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .skills-title-sticker {
+    font-size: clamp(20px, 5.5vw, 26px);
+    -webkit-text-stroke: 2.8px #ffffff;
+    filter: drop-shadow(0 3px 0 #0d2f24);
+  }
+
+  .skill-icons-row {
+    gap: clamp(10px, 2.8vw, 16px);
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .skill-icon-item {
+    width: clamp(48px, 12.5vw, 60px);
+    height: clamp(48px, 12.5vw, 60px);
   }
 
   .about-cards-row {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .pendidikan-card,
+  .sertifikat-card {
+    padding: 18px;
+    border-radius: 20px;
   }
 
   .floating-up-btn {
-    right: 18px;
-    bottom: 20px;
+    right: 14px;
+    bottom: 16px;
+    z-index: 999;
   }
 
-  .tentang-text {
-    padding-right: 18px;
-    font-size: 14px;
+  .floating-up-pill {
+    width: 44px;
+    height: 52px;
+    border-radius: 14px;
+    border-width: 2.5px;
   }
 
-  .skills-wrapper {
-    flex-wrap: wrap;
+  .up-chevron-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .up-btn-text {
+    font-size: 10px;
   }
 
   .leaf-left,
@@ -2748,35 +2850,220 @@
   }
 }
 
-/* Responsive adjustments for Mobile/Tablet */
+/* Responsive adjustments for Section 3 (Wheel / Project Showcase) */
 @media (max-width: 768px) {
+  .project-section {
+    height: auto;
+    min-height: 100vh;
+    max-height: none;
+    padding: 24px 14px 45px;
+    overflow-y: visible;
+    justify-content: flex-start;
+    gap: 12px;
+    scroll-snap-align: none;
+  }
+
+  .project-container {
+    height: auto;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .project-top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 4px;
+    padding: 0 4px;
+    gap: 8px;
+    position: relative;
+  }
+
+  .project-title-center {
+    margin: 0;
+  }
+
+  .project-title-sticker {
+    font-size: clamp(22px, 5.5vw, 28px);
+    -webkit-text-stroke: 2.5px #ffffff;
+    filter: drop-shadow(0 3px 0px rgba(0, 0, 0, 0.28));
+  }
+
+  .see-more-pill-btn {
+    position: static;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 9999px;
+    white-space: nowrap;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+  }
+
+  .project-filter-wrapper {
+    width: 100%;
+  }
+
+  .filter-badge-tab {
+    font-size: 11px;
+    padding: 3px 14px;
+  }
+
+  .filter-menu-bar {
+    padding: 6px 10px;
+    gap: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+  }
+
+  .filter-item-btn {
+    font-size: 11.5px;
+    padding: 3px 8px;
+  }
+
+  .filter-item-active {
+    -webkit-text-stroke: 2px #ffffff !important;
+  }
+
+  .wheel-showcase-stage {
+    height: clamp(340px, 48vh, 410px);
+    margin-top: 4px;
+    width: 100%;
+  }
+
+  .wheel-cards-track {
+    width: 260px;
+  }
+
+  .wheel-card-anchor {
+    height: clamp(330px, 46vh, 390px);
+  }
+
+  .wheel-card-img {
+    max-width: clamp(220px, 66vw, 280px);
+  }
+
+  .wheel-nav-arrow {
+    width: 36px;
+    height: 36px;
+    background: rgba(15, 61, 47, 0.65) !important;
+    border-radius: 50% !important;
+    backdrop-filter: blur(6px);
+  }
+
+  .arrow-left {
+    left: 2px;
+  }
+
+  .arrow-right {
+    right: 2px;
+  }
+
+  .wheel-bottom-controls {
+    margin-top: 6px;
+    margin-bottom: 8px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .wheel-swipe-pill {
+    font-size: 10.5px;
+    padding: 5px 14px;
+    max-width: min(84vw, 320px);
+    text-align: center;
+    white-space: normal;
+    line-height: 1.3;
+  }
+}
+
+/* Responsive adjustments for Section 4 (Contact Section) */
+@media (max-width: 768px) {
+  .contact-section {
+    height: auto;
+    min-height: 100vh;
+    max-height: none;
+    padding: 50px 16px 60px;
+    overflow-y: visible;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    scroll-snap-align: none;
+  }
+
+  .contact-stage-content {
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  /* Single centered bold title */
   .contact-title-left {
-    left: 12px;
-    font-size: 28px;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: rotate(-3deg);
+    font-size: clamp(34px, 8.5vw, 44px);
+    -webkit-text-stroke: 3.5px #ffffff;
+    margin: 0 auto 6px;
+    text-align: center;
+    z-index: 20;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.38));
   }
-  .contact-title-right {
-    right: 12px;
-    font-size: 28px;
-  }
-  .arrow-left-wrapper {
-    left: 20%;
-    width: 180px;
-  }
+
+  /* Hide duplicate right title & curly arrows on mobile */
+  .contact-title-right,
+  .arrow-left-wrapper,
   .arrow-right-wrapper {
-    right: 20%;
-    width: 180px;
+    display: none !important;
   }
+
+  .contact-center-ring-wrapper {
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.45;
+    z-index: 5;
+  }
+
+  .contact-ring-center {
+    width: 170px;
+  }
+
   .contact-papers-container {
-    width: 92%;
-    top: 52vh;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: min(92%, 350px);
+    gap: 16px;
+    margin: 8px auto 0;
+    z-index: 25;
   }
+
+  .torn-paper-card {
+    height: 84px;
+    width: 100%;
+  }
+
   .social-brand-icon {
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
   }
+
   .instagram-handle-text,
   .wa-number-text {
-    font-size: 20px;
+    font-size: 18px;
+    font-weight: 800;
   }
 }
 

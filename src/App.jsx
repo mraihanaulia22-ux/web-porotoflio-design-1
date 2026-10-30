@@ -201,9 +201,40 @@ export default function App() {
 
   const isModalActive = isCatalogOpen || Boolean(selectedProjectDetail) || isCmsOpen || Boolean(activeCertPreview);
 
-  // Smooth full-page gliding touch & wheel handlers
+  // IntersectionObserver to sync navbar & up-button on natural scrolling (especially on mobile/tablet)
+  useEffect(() => {
+    const sectionEls = sections.map((id) => document.getElementById(id)).filter(Boolean);
+    if (sectionEls.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (isGlidingRef.current) return;
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.25) {
+            const idx = sections.indexOf(entry.target.id);
+            if (idx !== -1) {
+              setCurrentSectionIdx(idx);
+              setActiveTab(navLinks[idx]);
+              setShowUpBtn(idx > 0);
+            }
+          }
+        });
+      },
+      { threshold: [0.25, 0.5] }
+    );
+
+    sectionEls.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  // Smooth full-page gliding touch & wheel handlers for Desktop
   useEffect(() => {
     if (isModalActive) return;
+
+    // Do not hijack touch/wheel on mobile/tablet to ensure buttery smooth native scrolling
+    if (window.innerWidth <= 768) {
+      return;
+    }
 
     let touchStartY = 0;
 

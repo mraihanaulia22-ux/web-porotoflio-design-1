@@ -19,6 +19,12 @@ html {
   scroll-snap-type: y mandatory;
 }
 
+@media (max-width: 768px) {
+  html {
+    scroll-snap-type: none !important;
+  }
+}
+
 html, body {
   width: 100%;
   min-height: 100%;
