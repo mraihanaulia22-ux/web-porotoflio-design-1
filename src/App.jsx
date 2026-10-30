@@ -227,14 +227,9 @@ export default function App() {
     return () => observer.disconnect();
   }, []);
 
-  // Smooth full-page gliding touch & wheel handlers for Desktop
+  // Smooth full-page gliding touch & wheel handlers for all viewports (Mobile, Tablet, Desktop)
   useEffect(() => {
     if (isModalActive) return;
-
-    // Do not hijack touch/wheel on mobile/tablet to ensure buttery smooth native scrolling
-    if (window.innerWidth <= 768) {
-      return;
-    }
 
     let touchStartY = 0;
 
@@ -250,15 +245,19 @@ export default function App() {
     };
 
     const handleTouchStart = (e) => {
-      touchStartY = e.touches[0].clientY;
+      if (e.touches && e.touches[0]) {
+        touchStartY = e.touches[0].clientY;
+      }
     };
 
     const handleTouchEnd = (e) => {
       if (isGlidingRef.current) return;
+      if (!e.changedTouches || !e.changedTouches[0]) return;
       const diff = touchStartY - e.changedTouches[0].clientY;
-      if (diff > 50) {
+      // 45px swipe threshold for clean, responsive section jump scroll
+      if (diff > 45) {
         navigateToSection(currentSectionIdx + 1);
-      } else if (diff < -50) {
+      } else if (diff < -45) {
         navigateToSection(currentSectionIdx - 1);
       }
     };
