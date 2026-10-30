@@ -462,8 +462,8 @@
   }
 }
 
-/* 2. TABLET PORTRAIT & MEDIUM SCREENS (769px - 1024px) */
-@media (max-width: 1024px) {
+/* 2. TABLET PORTRAIT & MEDIUM SCREENS (641px - 1024px) */
+@media (min-width: 641px) and (max-width: 1024px) {
   .hero-section {
     height: 100vh;
     height: 100dvh;
@@ -507,7 +507,7 @@
     min-height: 0;
   }
 
-  /* Berdampingan (Side-by-side) seperti Desktop / Laptop - Hampir Memenuhi Layar */
+  /* Berdampingan (Side-by-side) untuk Tablet / Layar Medium */
   .stage-content {
     display: flex;
     flex-direction: row;
@@ -519,7 +519,7 @@
   }
 
   .card-wrapper {
-    margin-top: -18px; /* Tali lanyard terselip rapi ke bawah navbar */
+    margin-top: -18px;
     flex-shrink: 1;
     display: flex;
     flex-direction: column;
@@ -579,14 +579,14 @@
   }
 }
 
-/* 3. MOBILE PHONES (<= 768px) */
-@media (max-width: 768px) {
+/* 3. MOBILE PHONES (<= 640px) - Stack Vertikal Terpadu (Atas-Bawah) Memenuhi Layar */
+@media (max-width: 640px) {
   .hero-section {
     height: 100vh;
     height: 100dvh;
     min-height: 100vh;
     max-height: 100vh;
-    padding: clamp(48px, 7vh, 62px) 8px clamp(6px, 1.2vh, 12px);
+    padding: clamp(46px, 6.8vh, 58px) 12px clamp(8px, 1.4vh, 16px);
     overflow: hidden;
     justify-content: space-between;
     gap: 4px;
@@ -640,9 +640,9 @@
     -webkit-text-stroke: 1.6px #ffffff;
   }
 
-  /* Side-by-side Hero Stage Layout (Berdampingan Proporsional Besar seperti Desktop) */
+  /* Vertical Unified Stack Layout: ID Card di Atas, Berkas di Bawah */
   .stage-container {
-    margin-top: -12px;
+    margin-top: -6px;
     width: 100%;
     flex: 1;
     display: flex;
@@ -653,66 +653,75 @@
 
   .stage-content {
     display: flex;
-    flex-direction: row; /* Berdampingan */
-    align-items: flex-start; /* Tali lanyard naik ke atas menyentuh navbar */
+    flex-direction: column; /* Atas-Bawah untuk mengisi tinggi layar HP */
+    align-items: center;
     justify-content: center;
-    gap: clamp(4px, 1.5vw, 10px);
+    gap: clamp(8px, 1.8vh, 16px);
     width: 100%;
     max-width: 100%;
-    max-height: 100%;
+    position: relative;
   }
 
+  /* Card 1: ID Card di Atas - Tali Lanyard Tersambung Rapi ke Bawah Navbar */
   .card-wrapper {
-    margin-top: -16px; /* Tali ID Card terselip ke belakang navbar */
-    flex-shrink: 1;
-    min-width: 0;
+    margin-top: -8px;
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
+    z-index: 12;
   }
 
   .id-card-img {
-    width: clamp(145px, 43vw, 210px);
+    width: clamp(170px, 52vw, 220px);
     height: auto;
-    max-height: clamp(270px, 54vh, 380px);
+    max-height: clamp(195px, 30vh, 245px);
     object-fit: contain;
   }
 
+  /* Sticker PORTO FOLIO Overlapping di Bawah-Kiri ID Card */
   .sticker-wrapper {
     top: calc(100% - 18px);
-    left: -6px;
-    transform: rotate(-6deg);
+    left: -10px;
+    transform: rotate(-5deg);
+    z-index: 16;
   }
 
   .portofolio-sticker {
-    width: clamp(110px, 32vw, 160px);
+    width: clamp(120px, 36vw, 160px);
     height: auto;
   }
 
+  /* Card 2: Berkas Dossier di Bawah - Lebar & Tulisan Jelas Terbaca */
   .berkas-wrapper {
-    margin-top: 14px; /* Posisi berkas sejajar seimbang di samping ID Card */
-    flex-shrink: 1;
-    min-width: 0;
+    margin-top: 4px;
+    flex-shrink: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
+    width: 100%;
+    max-width: 360px;
+    z-index: 8;
   }
 
   .berkas-img {
-    width: clamp(190px, 55vw, 275px);
+    width: min(90vw, 340px);
     height: auto;
-    max-height: clamp(280px, 57vh, 400px);
+    max-height: clamp(195px, 31vh, 250px);
     object-fit: contain;
   }
 
+  /* Ring Emas di Belakang Transisi Kartu */
   .ring-center {
     display: block;
-    width: 75px;
-    height: 75px;
-    top: 30%;
-    left: 36%;
+    width: 85px;
+    height: 85px;
+    top: 42%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     opacity: 0.85;
+    z-index: 5;
   }
 
   .ring-bottom-right {
@@ -722,6 +731,7 @@
     right: -15px;
   }
 
+  /* Footer Action Button */
   .hero-footer {
     margin-top: 0;
     padding-bottom: 2px;
@@ -734,10 +744,10 @@
   .bottom-pill-btn {
     font-size: 11px;
     font-weight: 800;
-    padding: 6px 20px;
+    padding: 7px 22px;
     border-radius: 9999px;
     width: auto;
-    max-width: 260px;
+    max-width: 270px;
     text-align: center;
   }
 }
