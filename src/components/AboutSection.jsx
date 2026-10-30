@@ -10,6 +10,17 @@ export default function AboutSection({ skills, certificates, onOpenCertPreview }
   const pendidikanList = safeCerts.filter((c) => c && c.type === 'pendidikan');
   const sertifikatList = safeCerts.filter((c) => c && c.type === 'sertifikat');
 
+  const getSkillModifierClass = (skill) => {
+    if (!skill) return '';
+    const text = `${skill.id || ''} ${skill.name || ''}`.toLowerCase();
+    if (text.includes('figma')) return 'logo-figma';
+    if (text.includes('canva')) return 'logo-canva';
+    if (text.includes('illustrator')) return 'logo-illustrator';
+    if (text.includes('photoshop')) return 'logo-photoshop';
+    if (text.includes('corel')) return 'logo-corel';
+    return '';
+  };
+
   return (
     <section id="about-section" className="about-section">
       {/* Top Connecting Green Mat with Drop Shadow */}
@@ -65,7 +76,11 @@ export default function AboutSection({ skills, certificates, onOpenCertPreview }
                   title={`${skill.name} • ${skill.level || 'Software Specialist'}`}
                 >
                   {skill.logo ? (
-                    <img src={skill.logo} alt={skill.name} className="skill-logo" />
+                    <img
+                      src={skill.logo}
+                      alt={skill.name}
+                      className={`skill-logo ${getSkillModifierClass(skill)}`.trim()}
+                    />
                   ) : (
                     <div className="skill-logo-fallback">
                       {skill.name.slice(0, 2).toUpperCase()}

@@ -1049,23 +1049,28 @@
 
 /* Optical alignment & scale normalization so all 5 logos are perceived equal in size */
 .logo-figma {
-  transform: scale(1.36);
+  transform: scale(1.46);
+  transform-origin: center center;
 }
 
 .logo-canva {
   transform: scale(1.15);
+  transform-origin: center center;
 }
 
 .logo-illustrator {
   transform: scale(1.02);
+  transform-origin: center center;
 }
 
 .logo-photoshop {
   transform: scale(1.02);
+  transform-origin: center center;
 }
 
 .logo-corel {
   transform: scale(1.04);
+  transform-origin: center center;
 }
 
 .leaf-accent {
