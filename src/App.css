@@ -469,7 +469,7 @@
     height: 100dvh;
     min-height: 100vh;
     max-height: 100vh;
-    padding: clamp(65px, 8.5vh, 85px) clamp(16px, 3vw, 32px) clamp(10px, 1.8vh, 18px);
+    padding: clamp(65px, 8.5vh, 85px) clamp(16px, 2.5vw, 28px) clamp(8px, 1.5vh, 16px);
     overflow: hidden;
     justify-content: space-between;
     scroll-snap-align: start;
@@ -498,7 +498,7 @@
   }
 
   .stage-container {
-    margin-top: 0;
+    margin-top: -15px;
     flex: 1;
     width: 100%;
     display: flex;
@@ -507,62 +507,67 @@
     min-height: 0;
   }
 
-  /* Berdampingan (Side-by-side) seperti Desktop / Laptop */
+  /* Berdampingan (Side-by-side) seperti Desktop / Laptop - Hampir Memenuhi Layar */
   .stage-content {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
-    gap: clamp(14px, 3vw, 38px);
+    gap: clamp(14px, 2.8vw, 36px);
     width: 100%;
     max-height: 100%;
   }
 
   .card-wrapper {
-    margin-top: 0;
+    margin-top: -18px; /* Tali lanyard terselip rapi ke bawah navbar */
     flex-shrink: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .id-card-img {
     height: auto;
-    width: clamp(200px, 35vw, 320px);
-    max-height: clamp(320px, 50vh, 460px);
+    width: clamp(250px, 42vw, 380px);
+    max-height: clamp(380px, 58vh, 540px);
     object-fit: contain;
   }
 
   .sticker-wrapper {
-    top: calc(100% - 22px);
-    left: -12px;
+    top: calc(100% - 24px);
+    left: -14px;
     transform: rotate(-6deg);
   }
 
   .portofolio-sticker {
-    width: clamp(135px, 21vw, 200px);
+    width: clamp(160px, 26vw, 240px);
   }
 
   .berkas-wrapper {
-    margin-top: 0;
+    margin-top: 18px;
     flex-shrink: 1;
+    display: flex;
+    justify-content: center;
   }
 
   .berkas-img {
     height: auto;
-    width: clamp(260px, 45vw, 410px);
-    max-height: clamp(340px, 53vh, 500px);
+    width: clamp(330px, 53vw, 490px);
+    max-height: clamp(400px, 62vh, 580px);
     object-fit: contain;
   }
 
   .ring-center {
     display: block;
-    top: 26%;
-    left: 37%;
-    width: clamp(85px, 13vw, 140px);
-    height: clamp(85px, 13vw, 140px);
+    top: 22%;
+    left: 38%;
+    width: clamp(110px, 16vw, 160px);
+    height: clamp(110px, 16vw, 160px);
   }
 
   .hero-footer {
-    margin-top: 4px;
-    padding-bottom: 6px;
+    margin-top: 2px;
+    padding-bottom: 4px;
   }
 
   .bottom-pill-btn {
@@ -581,10 +586,10 @@
     height: 100dvh;
     min-height: 100vh;
     max-height: 100vh;
-    padding: clamp(54px, 7.8vh, 70px) 10px clamp(8px, 1.6vh, 16px);
+    padding: clamp(48px, 7vh, 62px) 8px clamp(6px, 1.2vh, 12px);
     overflow: hidden;
     justify-content: space-between;
-    gap: 6px;
+    gap: 4px;
     scroll-snap-align: start;
     scroll-snap-stop: always;
   }
@@ -594,14 +599,14 @@
     width: 100%;
     padding: 0 10px;
     box-sizing: border-box;
-    top: 10px;
+    top: 8px;
   }
 
   .navbar-container {
     width: 100%;
     max-width: 420px;
     gap: 6px;
-    padding: 6px 12px 6px 8px;
+    padding: 5px 12px 5px 8px;
     border-radius: 14px;
     justify-content: space-between;
   }
@@ -635,9 +640,9 @@
     -webkit-text-stroke: 1.6px #ffffff;
   }
 
-  /* Side-by-side Hero Stage Layout (Berdampingan persis seperti Desktop / Laptop) */
+  /* Side-by-side Hero Stage Layout (Berdampingan Proporsional Besar seperti Desktop) */
   .stage-container {
-    margin-top: 0;
+    margin-top: -12px;
     width: 100%;
     flex: 1;
     display: flex;
@@ -648,17 +653,17 @@
 
   .stage-content {
     display: flex;
-    flex-direction: row; /* Berdampingan persis seperti preview laptop / desktop */
-    align-items: center;
+    flex-direction: row; /* Berdampingan */
+    align-items: flex-start; /* Tali lanyard naik ke atas menyentuh navbar */
     justify-content: center;
-    gap: clamp(4px, 1.8vw, 12px);
+    gap: clamp(4px, 1.5vw, 10px);
     width: 100%;
     max-width: 100%;
     max-height: 100%;
   }
 
   .card-wrapper {
-    margin-top: 0;
+    margin-top: -16px; /* Tali ID Card terselip ke belakang navbar */
     flex-shrink: 1;
     min-width: 0;
     display: flex;
@@ -668,25 +673,25 @@
   }
 
   .id-card-img {
-    width: clamp(125px, 38vw, 180px);
+    width: clamp(145px, 43vw, 210px);
     height: auto;
-    max-height: clamp(220px, 44vh, 320px);
+    max-height: clamp(270px, 54vh, 380px);
     object-fit: contain;
   }
 
   .sticker-wrapper {
-    top: calc(100% - 16px);
+    top: calc(100% - 18px);
     left: -6px;
     transform: rotate(-6deg);
   }
 
   .portofolio-sticker {
-    width: clamp(95px, 29vw, 145px);
+    width: clamp(110px, 32vw, 160px);
     height: auto;
   }
 
   .berkas-wrapper {
-    margin-top: 0;
+    margin-top: 14px; /* Posisi berkas sejajar seimbang di samping ID Card */
     flex-shrink: 1;
     min-width: 0;
     display: flex;
@@ -695,19 +700,19 @@
   }
 
   .berkas-img {
-    width: clamp(165px, 51vw, 240px);
+    width: clamp(190px, 55vw, 275px);
     height: auto;
-    max-height: clamp(235px, 47vh, 345px);
+    max-height: clamp(280px, 57vh, 400px);
     object-fit: contain;
   }
 
   .ring-center {
     display: block;
-    width: 65px;
-    height: 65px;
-    top: 36%;
+    width: 75px;
+    height: 75px;
+    top: 30%;
     left: 36%;
-    opacity: 0.8;
+    opacity: 0.85;
   }
 
   .ring-bottom-right {
@@ -729,10 +734,10 @@
   .bottom-pill-btn {
     font-size: 11px;
     font-weight: 800;
-    padding: 6px 18px;
+    padding: 6px 20px;
     border-radius: 9999px;
     width: auto;
-    max-width: 250px;
+    max-width: 260px;
     text-align: center;
   }
 }
