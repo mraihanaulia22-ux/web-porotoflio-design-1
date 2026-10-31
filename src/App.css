@@ -526,14 +526,14 @@
     -webkit-text-stroke: 1.8px #ffffff;
   }
 
-  /* Stage Container: ID Card dinaikkan agar tali lanyard terselip di balik Navbar */
+  /* Stage Container: ID Card dinaikkan pas agar HANYA ujung atas tali yang terselip di bawah Navbar */
   .stage-container {
     margin-top: 0;
-    padding-top: 26px; /* Memberikan ruang agar tali naik menyusup di bawah navbar */
+    padding-top: clamp(48px, 7.5vh, 64px); /* Turunkan sedikit agar badan kartu & sebagian tali tetap terlihat */
     width: 100%;
     flex: 1;
     display: flex;
-    align-items: flex-start; /* Poros mulai dari atas dekat navbar */
+    align-items: flex-start;
     justify-content: center;
     min-height: 0;
     z-index: 10;
@@ -545,16 +545,16 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    gap: clamp(12px, 2.2vh, 24px);
+    gap: clamp(18px, 3.2vh, 32px); /* Jarak pas & lega agar ID Card dan Dokumen tidak dempetan */
     width: 100%;
-    max-width: 580px;
+    max-width: 600px;
     height: 100%;
     position: relative;
   }
 
-  /* Card 1: ID Card di Atas - Tali Lanyard Masuk Tertutup di Bawah Navbar */
+  /* Card 1: ID Card di Atas - Ujung Atas Tali Lanyard Masuk Pas Tertutup di Balik Navbar */
   .card-wrapper {
-    margin-top: -14px; /* Menembus ke atas persis di balik navbar */
+    margin-top: 0; /* Pas: Hanya ujung atas tali yang masuk di bawah navbar */
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
@@ -565,40 +565,40 @@
   }
 
   .id-card-img {
-    width: clamp(180px, 48vw, 300px);
+    width: clamp(200px, 54vw, 320px); /* Ukuran diperbesar sedikit */
     height: auto;
-    max-height: clamp(210px, 34vh, 310px);
+    max-height: clamp(225px, 35vh, 320px);
     object-fit: contain;
   }
 
   /* Sticker PORTO FOLIO Overlapping di Bawah-Kiri ID Card */
   .sticker-wrapper {
-    top: calc(100% - 22px);
+    top: calc(100% - 24px);
     left: -12px;
     transform: rotate(-5deg);
     z-index: 16;
   }
 
   .portofolio-sticker {
-    width: clamp(130px, 34vw, 210px);
+    width: clamp(140px, 38vw, 220px); /* Ukuran stiker proporsional mengikuti ID card */
     height: auto;
   }
 
-  /* Card 2: Berkas Dossier di Bawah - Proporsional Lebar & Nyaman Dibaca */
+  /* Card 2: Berkas Dossier di Bawah - Proporsional Besar, Lebar & Nyaman Dibaca */
   .berkas-wrapper {
-    margin-top: 4px;
+    margin-top: 8px; /* Memberi ruang napas dari ID Card & stiker */
     flex-shrink: 0;
     display: flex;
     justify-content: center;
     width: 100%;
-    max-width: clamp(340px, 86vw, 540px);
+    max-width: clamp(350px, 90vw, 560px);
     z-index: 8;
   }
 
   .berkas-img {
     width: 100%;
     height: auto;
-    max-height: clamp(210px, 35vh, 320px);
+    max-height: clamp(220px, 36vh, 330px); /* Ukuran diperbesar sedikit */
     object-fit: contain;
   }
 
