@@ -462,134 +462,20 @@
   }
 }
 
-/* 2. TABLET PORTRAIT & MEDIUM SCREENS (641px - 1024px) */
-@media (min-width: 641px) and (max-width: 1024px) {
+/* 2. TABLET PORTRAIT & MOBILE SCREENS (<= 1024px) - STACK VERTIKAL TERPADU (ATAS-BAWAH) */
+@media (max-width: 1024px) {
   .hero-section {
     height: 100vh;
     height: 100dvh;
     min-height: 100vh;
     max-height: 100vh;
-    padding: clamp(65px, 8.5vh, 85px) clamp(16px, 2.5vw, 28px) clamp(8px, 1.5vh, 16px);
+    padding: clamp(48px, 6.8vh, 68px) 14px clamp(10px, 1.8vh, 20px);
     overflow: hidden;
-    justify-content: space-between;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-  }
-
-  .navbar-container {
-    width: min(94%, 720px);
-    gap: 12px;
-    padding: 8px 16px 8px 12px;
-    border-radius: 18px;
-  }
-
-  .nav-menu {
-    gap: clamp(14px, 3.5vw, 36px);
-    margin: 0 auto;
-  }
-
-  .nav-item {
-    font-size: 15px;
-  }
-
-  .nav-item-active {
-    font-size: 17.5px;
-    -webkit-text-stroke: 2.2px #ffffff;
-  }
-
-  .stage-container {
-    margin-top: -15px;
-    flex: 1;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 0;
-  }
-
-  /* Berdampingan (Side-by-side) untuk Tablet / Layar Medium */
-  .stage-content {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: center;
-    gap: clamp(14px, 2.8vw, 36px);
-    width: 100%;
-    max-height: 100%;
-  }
-
-  .card-wrapper {
-    margin-top: -18px;
-    flex-shrink: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
-  }
-
-  .id-card-img {
-    height: auto;
-    width: clamp(250px, 42vw, 380px);
-    max-height: clamp(380px, 58vh, 540px);
-    object-fit: contain;
-  }
-
-  .sticker-wrapper {
-    top: calc(100% - 24px);
-    left: -14px;
-    transform: rotate(-6deg);
-  }
-
-  .portofolio-sticker {
-    width: clamp(160px, 26vw, 240px);
-  }
-
-  .berkas-wrapper {
-    margin-top: 18px;
-    flex-shrink: 1;
-    display: flex;
-    justify-content: center;
-  }
-
-  .berkas-img {
-    height: auto;
-    width: clamp(330px, 53vw, 490px);
-    max-height: clamp(400px, 62vh, 580px);
-    object-fit: contain;
-  }
-
-  .ring-center {
-    display: block;
-    top: 22%;
-    left: 38%;
-    width: clamp(110px, 16vw, 160px);
-    height: clamp(110px, 16vw, 160px);
-  }
-
-  .hero-footer {
-    margin-top: 2px;
-    padding-bottom: 4px;
-  }
-
-  .bottom-pill-btn {
-    font-size: 12.5px;
-    padding: 8px 24px;
-    border-radius: 9999px;
-    width: auto;
-    max-width: 300px;
-  }
-}
-
-/* 3. MOBILE PHONES (<= 640px) - Stack Vertikal Terpadu (Atas-Bawah) Memenuhi Layar */
-@media (max-width: 640px) {
-  .hero-section {
-    height: 100vh;
-    height: 100dvh;
-    min-height: 100vh;
-    max-height: 100vh;
-    padding: clamp(38px, 5.5vh, 48px) 12px clamp(8px, 1.4vh, 16px);
-    overflow: hidden;
     justify-content: space-between;
-    gap: 2px;
+    align-items: center;
+    box-sizing: border-box;
     scroll-snap-align: start;
     scroll-snap-stop: always;
   }
@@ -597,25 +483,24 @@
   /* Compact Navbar Floating Island */
   .navbar-wrapper {
     width: 100%;
-    padding: 0 10px;
+    padding: 0 12px;
     box-sizing: border-box;
-    top: 8px;
+    top: 10px;
     z-index: 120;
   }
 
   .navbar-container {
-    width: 100%;
-    max-width: 420px;
-    gap: 6px;
-    padding: 5px 12px 5px 8px;
-    border-radius: 14px;
+    width: min(96%, 520px);
+    gap: 8px;
+    padding: 6px 14px 6px 10px;
+    border-radius: 16px;
     justify-content: space-between;
   }
 
   .nav-square-btn {
-    width: 26px;
-    height: 26px;
-    border-radius: 7px;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
     flex-shrink: 0;
   }
 
@@ -624,26 +509,26 @@
     flex: 1;
     justify-content: space-between;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
     margin: 0;
     overflow: visible;
   }
 
   .nav-item {
-    font-size: 11px;
+    font-size: clamp(11.5px, 1.8vw, 14px);
     padding: 2px 4px;
     letter-spacing: 0.2px;
     font-weight: 800;
   }
 
   .nav-item-active {
-    font-size: 12.5px;
-    -webkit-text-stroke: 1.6px #ffffff;
+    font-size: clamp(13px, 2vw, 16px);
+    -webkit-text-stroke: 1.8px #ffffff;
   }
 
-  /* Vertical Unified Stack Layout: ID Card di Atas, Berkas di Bawah */
+  /* Stage Container: Menghubungkan ID Card tepat ke bawah Navbar */
   .stage-container {
-    margin-top: -30px; /* Ditarik ke atas agar tali ID Card terselip ke bawah navbar */
+    margin-top: -26px;
     width: 100%;
     flex: 1;
     display: flex;
@@ -653,20 +538,22 @@
     z-index: 10;
   }
 
+  /* Stage Content: Stack Vertikal (Atas-Bawah) Memenuhi Layar & Bebas Dead Space */
   .stage-content {
     display: flex;
-    flex-direction: column; /* Atas-Bawah untuk mengisi tinggi layar HP */
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: clamp(14px, 2.5vh, 22px); /* Jarak pas & lega antar ID card dan dokumen */
+    gap: clamp(14px, 2.8vh, 28px);
     width: 100%;
-    max-width: 100%;
+    max-width: 580px;
+    height: 100%;
     position: relative;
   }
 
-  /* Card 1: ID Card di Atas - Tali Lanyard Masuk Pas Tertutup di Belakang Navbar */
+  /* Card 1: ID Card di Atas - Tali Lanyard Masuk Tertutup di Bawah Navbar */
   .card-wrapper {
-    margin-top: -12px;
+    margin-top: -10px;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
@@ -677,49 +564,49 @@
   }
 
   .id-card-img {
-    width: clamp(170px, 52vw, 220px);
+    width: clamp(180px, 48vw, 300px);
     height: auto;
-    max-height: clamp(195px, 30vh, 245px);
+    max-height: clamp(210px, 34vh, 310px);
     object-fit: contain;
   }
 
   /* Sticker PORTO FOLIO Overlapping di Bawah-Kiri ID Card */
   .sticker-wrapper {
-    top: calc(100% - 18px);
-    left: -10px;
+    top: calc(100% - 22px);
+    left: -12px;
     transform: rotate(-5deg);
     z-index: 16;
   }
 
   .portofolio-sticker {
-    width: clamp(120px, 36vw, 160px);
+    width: clamp(130px, 34vw, 210px);
     height: auto;
   }
 
-  /* Card 2: Berkas Dossier di Bawah - Lebar & Tulisan Jelas Terbaca */
+  /* Card 2: Berkas Dossier di Bawah - Proporsional Lebar & Nyaman Dibaca */
   .berkas-wrapper {
     margin-top: 6px;
     flex-shrink: 0;
     display: flex;
     justify-content: center;
     width: 100%;
-    max-width: 360px;
+    max-width: clamp(340px, 86vw, 540px);
     z-index: 8;
   }
 
   .berkas-img {
-    width: min(90vw, 340px);
+    width: 100%;
     height: auto;
-    max-height: clamp(195px, 31vh, 250px);
+    max-height: clamp(210px, 35vh, 320px);
     object-fit: contain;
   }
 
   /* Ring Emas di Belakang Transisi Kartu */
   .ring-center {
     display: block;
-    width: 85px;
-    height: 85px;
-    top: 44%;
+    width: clamp(85px, 15vw, 140px);
+    height: clamp(85px, 15vw, 140px);
+    top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
     opacity: 0.85;
@@ -727,8 +614,8 @@
   }
 
   .ring-bottom-right {
-    width: 110px;
-    height: 110px;
+    width: clamp(120px, 18vw, 180px);
+    height: clamp(120px, 18vw, 180px);
     bottom: -15px;
     right: -15px;
   }
@@ -736,20 +623,21 @@
   /* Footer Action Button */
   .hero-footer {
     margin-top: 0;
-    padding-bottom: 2px;
+    padding-bottom: 4px;
     display: flex;
     justify-content: center;
     width: 100%;
     flex-shrink: 0;
+    z-index: 25;
   }
 
   .bottom-pill-btn {
-    font-size: 11px;
+    font-size: clamp(11.5px, 1.6vw, 13px);
     font-weight: 800;
-    padding: 7px 22px;
+    padding: clamp(7px, 1.2vh, 10px) clamp(20px, 4vw, 32px);
     border-radius: 9999px;
     width: auto;
-    max-width: 270px;
+    max-width: 320px;
     text-align: center;
   }
 }
