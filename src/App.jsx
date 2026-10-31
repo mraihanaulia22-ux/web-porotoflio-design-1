@@ -290,13 +290,6 @@ export default function App() {
       {/* Top Persistent Global Navbar */}
       <header className={`navbar-wrapper ${isNavbarVisible ? 'navbar-visible' : 'navbar-hidden'}`}>
         <nav className="navbar-container">
-          {/* White square logo / icon button (Klik 3x rahasia untuk Studio CMS) */}
-          <div
-            className="nav-square-btn"
-            onClick={handleLogoSecretClick}
-            title="Home (Klik 3x rahasia untuk Studio CMS)"
-            aria-label="Kembali ke Home"
-          />
 
           <div className="nav-menu">
             {navLinks.map((link) => {
