@@ -529,32 +529,33 @@
   /* Stage Container: ID Card dinaikkan pas agar HANYA ujung atas tali yang terselip di bawah Navbar */
   .stage-container {
     margin-top: 0;
-    padding-top: clamp(48px, 7.5vh, 64px); /* Turunkan sedikit agar badan kartu & sebagian tali tetap terlihat */
+    padding-top: clamp(40px, 6.2vh, 56px);
     width: 100%;
     flex: 1;
     display: flex;
-    align-items: flex-start;
+    align-items: stretch;
     justify-content: center;
     min-height: 0;
     z-index: 10;
   }
 
-  /* Stage Content: Stack Vertikal (Atas-Bawah) Memenuhi Layar & Bebas Dead Space */
+  /* Stage Content: Stack Vertikal (Atas-Bawah) Terbagi Rata, Bebas Dempet & Bebas Dead Space */
   .stage-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    gap: clamp(18px, 3.2vh, 32px); /* Jarak pas & lega agar ID Card dan Dokumen tidak dempetan */
+    justify-content: space-between; /* Bagikan ruang secara proporsional agar ID card & Berkas terpisah elegan */
+    gap: 0;
     width: 100%;
     max-width: 600px;
     height: 100%;
     position: relative;
+    padding-bottom: clamp(6px, 1.2vh, 12px);
   }
 
   /* Card 1: ID Card di Atas - Ujung Atas Tali Lanyard Masuk Pas Tertutup di Balik Navbar */
   .card-wrapper {
-    margin-top: 0; /* Pas: Hanya ujung atas tali yang masuk di bawah navbar */
+    margin-top: 0;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
@@ -565,9 +566,9 @@
   }
 
   .id-card-img {
-    width: clamp(200px, 54vw, 320px); /* Ukuran diperbesar sedikit */
+    width: clamp(200px, 54vw, 320px);
     height: auto;
-    max-height: clamp(225px, 35vh, 320px);
+    max-height: clamp(210px, 32vh, 300px);
     object-fit: contain;
   }
 
@@ -580,25 +581,25 @@
   }
 
   .portofolio-sticker {
-    width: clamp(140px, 38vw, 220px); /* Ukuran stiker proporsional mengikuti ID card */
+    width: clamp(140px, 38vw, 220px);
     height: auto;
   }
 
-  /* Card 2: Berkas Dossier di Bawah - Proporsional Besar, Lebar & Nyaman Dibaca */
+  /* Card 2: Berkas Dossier di Bawah - Diturunkan ke Bawah, Lebar, Lega & Bebas Dempet */
   .berkas-wrapper {
-    margin-top: 8px; /* Memberi ruang napas dari ID Card & stiker */
+    margin-top: clamp(24px, 4.5vh, 44px); /* Jarak lega menjauh ke bawah dari ID Card */
     flex-shrink: 0;
     display: flex;
     justify-content: center;
     width: 100%;
-    max-width: clamp(350px, 90vw, 560px);
+    max-width: clamp(350px, 92vw, 560px);
     z-index: 8;
   }
 
   .berkas-img {
     width: 100%;
     height: auto;
-    max-height: clamp(220px, 36vh, 330px); /* Ukuran diperbesar sedikit */
+    max-height: clamp(215px, 34vh, 320px);
     object-fit: contain;
   }
 
@@ -607,7 +608,7 @@
     display: block;
     width: clamp(85px, 15vw, 140px);
     height: clamp(85px, 15vw, 140px);
-    top: 45%;
+    top: 48%;
     left: 50%;
     transform: translate(-50%, -50%);
     opacity: 0.85;
